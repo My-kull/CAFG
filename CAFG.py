@@ -7,3 +7,8 @@ conn = mysql.connector.connect(
 cursor = conn.cursor()
 
 cursor.execute("SELECT * from airport;")
+results = cursor.fetchall()
+for row in results:
+    print(row)
+
+conn.close()
