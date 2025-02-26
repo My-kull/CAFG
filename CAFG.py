@@ -1,14 +1,21 @@
 import mysql.connector
 
-# Connect to MariaDB
-conn = mysql.connector.connect(
-    host="localhost", user="surviver", password="123", database="flight_game"
-)
-cursor = conn.cursor()
+try:
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="surviver",
+        password="123",
+        database="flight_game",
+        charset="latin1",
+        collation="latin1_swedish_ci",
+    )
+    print("Connected successfully!")
 
-cursor.execute("SELECT * from airport;")
-results = cursor.fetchall()
-for row in results:
-    print(row)
-
-conn.close()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM airport")
+    result = cursor.fetchall()
+    for row in result:
+        print(row)
+    conn.close()
+except mysql.connector.Error as err:
+    print(f"Error: {err}")
