@@ -1,4 +1,6 @@
 import mysql.connector
+import CAFG_items
+import EventHandler
 
 try:
     conn = mysql.connector.connect(
