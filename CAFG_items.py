@@ -55,7 +55,7 @@ luck_cookie.use_time = 1
 luck_cookie.active = True
 #Increases luck, possibly add a small chance to decrease it instead?
 
-s_rabbit_paw = Item("Avaruusjäniksen käpälä")
+s_rabbit_paw = Item("Space-rabbit Foot")
 s_rabbit_paw.desc = "Straight from the vast prairies of space."
 s_rabbit_paw.rarity = "Harvinainen"
 s_rabbit_paw.price = expensive
@@ -63,7 +63,7 @@ s_rabbit_paw.use_time = -1
 s_rabbit_paw.active = True
 #Adds a certain % buff to luck.
 
-janitor = Item("Janitors clothes")
+janitor = Item("Janitors Clothes")
 janitor.desc = "Allows you to disguise yourself as a janitor and work for some money."
 janitor.rarity = "Yleinen"
 janitor.price = costly
@@ -71,13 +71,21 @@ janitor.use_time = -1
 janitor.active = False
 #Under "Work", gives like 20€
 
-flightmaster = Item("Lennonjohtajan kuteet")
+flightmaster = Item("Flight-masters Clothes")
 flightmaster.desc = "Allows you to disguise your self as a flight master\nand earn money while flying. Due to you not knowing how to fly however,\nthere is a slight chance you'll fall out of the sky(0.1%)."
 flightmaster.rarity = "Harvinainen"
 flightmaster.price = expensive
 flightmaster.use_time = -1
 flightmaster.active = False
 #Under "Work", gives like 100€
+
+bulletvest = Item("Bulletproof Vest")
+bulletvest.desc = ""
+bulletvest.rarity = "Harvinainen"
+bulletvest.price = expensive
+bulletvest.use_time = 5
+bulletvest.active = True
+#
 
 tonnin_seteli = Item("Kahvi + keksi")
 tonnin_seteli.desc = "You think you may have gotten scammed...\nin fact you are pretty sure you did get scammed.\nYou did give a 1000€, right? There is no way it wasn't 1000€...\nIt was 1000€ you gave, didn't you? It was 1000€... \n\x1b[3m'Se oli tonnin seteli… enks mä antanu tonnin setelin?'\x1b[0m"
