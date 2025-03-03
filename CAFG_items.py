@@ -6,11 +6,14 @@ cheap = 10
 very_cheap = 2
 free = 0
 
-#About attribute.active: True means item is active, False means item is passive.
-#About rarity
+# About attribute.active: True means item is active, False means item is passive.
+# About rarity
+
 
 class Item:
-    def __init__(self,name):
+    desc = ""
+
+    def __init__(self, name):
         self.name = name
 
 
@@ -23,16 +26,16 @@ invis_cape.active = True
 invis_cape.local_effect_p = 50
 
 warhead = Item("Unstable Nuclear Warhead")
-warhead.desc = "A Nuclear Warhead. Obviously no one wants to arrest a man with an armed bomb.\nDue to its unstable nature however, there is a 0.5% chance it will detonate.\n\x1B[3mOh and by the way, don't ask how you are allowed onto ANY planes with THIS...\x1B[0m\n(Local threat stays at 0, -5% global threat)"
+warhead.desc = "A Nuclear Warhead. Obviously no one wants to arrest a man with an armed bomb.\nDue to its unstable nature however, there is a 0.5% chance it will detonate.\n\x1b[3mOh and by the way, don't ask how you are allowed onto ANY planes with THIS...\x1b[0m\n(Local threat stays at 0, -5% global threat)"
 warhead.rarity = "Erittäin Harvinainen"
-warhead.price = free #it's free!
+warhead.price = free  # it's free!
 warhead.use_time = -1
 warhead.active = False
 warhead.local_effect = 0
 warhead.global_effect_p = 0.05
 warhead.detonation_chance = 0.005
-#On a random turn= "The nuclear warhead is shaking!"
-#throw d20= 2-20 = "Nothing happened...", 1 = "Game over"
+# On a random turn= "The nuclear warhead is shaking!"
+# throw d20= 2-20 = "Nothing happened...", 1 = "Game over"
 
 lottery = Item("Falsified Lottery Coupon")
 lottery.desc = "With your skills- I mean luck, you modify-\n*ahem* you SOMEHOW manage to get a lottery coupon with the winning numbers!\nLucky you!"
@@ -70,12 +73,11 @@ flightmaster.use_time = -1
 flightmaster.active = False
 
 tonnin_seteli = Item("Kahvi + keksi")
-tonnin_seteli.desc = "You think you may have gotten scammed...\nin fact you are pretty sure you did get scammed.\nYou did give a 1000€, right? There is no way it wasn't 1000€...\nIt was 1000€ you gave, didn't you? It was 1000€... \n\x1B[3m'Se oli tonnin seteli… enks mä antanu tonnin setelin?'\x1B[0m"
+tonnin_seteli.desc = "You think you may have gotten scammed...\nin fact you are pretty sure you did get scammed.\nYou did give a 1000€, right? There is no way it wasn't 1000€...\nIt was 1000€ you gave, didn't you? It was 1000€... \n\x1b[3m'Se oli tonnin seteli… enks mä antanu tonnin setelin?'\x1b[0m"
 tonnin_seteli.rarity = "Erittäin harvinainen"
-tonnin_seteli.price = 1000 #Tonnin seteli...
+tonnin_seteli.price = 1000  # Tonnin seteli...
 tonnin_seteli.use_time = -1
 tonnin_seteli.active = False
 
 
 print(warhead.desc)
-
