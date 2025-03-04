@@ -95,4 +95,8 @@ tonnin_seteli.use_time = -1
 tonnin_seteli.active = False
 #Does absolutely nothing, reference to 'Kummeli'
 
-print(warhead.desc)
+shop_items = [invis_cape, lottery, luck_cookie, janitor, flightmaster, bulletvest, tonnin_seteli]
+
+
+for i in shop_items:
+    print(f"{i.name:<30} --- {i.price:>10}")
