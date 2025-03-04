@@ -190,3 +190,7 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2022-09-10 10:42:06
+
+DELETE FROM gloal_reached;
+DELETE FROM game;
+DELETE FROM airport WHERE type != "large_airport";
