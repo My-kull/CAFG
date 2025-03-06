@@ -22,13 +22,16 @@ def turnhandler():
     itemchecker()
     shoprandomiser(3)
     threathandler()
-    eventhandler(1, player_luck)
+    #THE "1" IN threat IS A PLACEHOLDER, UPDATE THIS PROPORTIONAL TO time_units IN SOME WAY WHEN USING THEM!!!
+    eventhandler(1, player_luck) #Increases local threat with threat.
     actionhandler()
     movementhandler()
 
 def threathandler():
     #handles global_threat
     global current_country
+    #!!!!!PLACEHOLDER!!!!!
+    #!!!!!UPDATE THIS WITH THE country.name FROM THE DATABASE USING THE PATH airport.iso_country = country.iso_country!!!!!
     current_country = "France"
     global global_threat
     global_threat += previous_travel_distance * 1 #formula for increasing global threat
@@ -36,13 +39,12 @@ def threathandler():
 
 #handles the arrival events
 def eventhandler(threat, luck):
-    if not local_threat.get(current_country):
+    if not local_threat.get(current_country): #Checks if country has an assigned local_threat in [dict] yet. If not, adds one.
         if len(local_threat.keys())==0:
             local_threat.update({current_country: 0})
         local_threat.update({current_country: 0})
-        local_threat.update({current_country:local_threat.get(current_country)+threat})
-    else:
-        local_threat.update({current_country: local_threat.get(current_country)+threat})
+
+    local_threat.update({current_country: local_threat.get(current_country)+threat}) #Increase local_threat for current country.
     #vv these multipliers are placeholders vv
     event_luck = (local_threat.get(current_country) * 1) * (global_threat * 1) - (luck * 1)
     eventhandlersub(event_luck)
@@ -57,7 +59,7 @@ def eventhandlersub(event_luck):
             return
         case 2:
             print("You found a bazaar in the basement of the airport! Time for a shopping spree!")
-            shoprandomiser(5)
+            shoprandomiser(5) #Shop has 5 random items instead of 3.
             return
         case 3:
             print("You spontaneously grew a moustache. You feel strangely at peace with the universe.")
@@ -66,7 +68,7 @@ def eventhandlersub(event_luck):
         case 4:
             print("It's the anniversary of the airport! People are celebrating without a care in the world.")
             global local_threat
-            local_threat.update({current_country: local_threat.get(current_country)-5})
+            local_threat.update({current_country: local_threat.get(current_country)-5}) #drop local_threat
         case _:
             print("It's a very boring airport! One star out of five!")
             return
@@ -111,7 +113,9 @@ def actionhandlersub(command):
         case "globalT":
             print(global_threat)
             return True
-
+        case "time":
+            print(time_units)
+            return True
         case _:
             print("Unknown command (? for a list of commands)")
             return True
@@ -134,9 +138,11 @@ def actionuse():
         print("You have no items. Go buy some")
     else:
         print("Your items")
-        print()
+        print("_______________________________________________________")
         for item in players_items:
-            print(item)
+            print(f"{item.name}\n"
+                  f"{item.desc}\n"
+                  f"-------------------------------------------------------")
         print()
 
         continue_using = True
@@ -194,6 +200,7 @@ def actionbuy():
                 print(f"Your balance: {player_money}")
                 print()
 
+#onks tälle checkpricelle enää mitää käyttöö? Siis kauppaha jo printtaa niien hinnat oikein
 def checkprice(item):
     #!!!!!!!!!!!!PLACEHOLDER!!!!!!!!!!!!
     return 100
@@ -207,8 +214,7 @@ def actioncheck():
         while continue_using:
             print("Your items")
             print()
-            for item in players_items:
-                print(item)
+
             print()
             item_to_check = input("What item do you want to check (N to go back): ")
             if item_to_check == "N":
@@ -232,6 +238,17 @@ def actionwork():
 def actionworksub(used_job):
     match used_job:
         case "clean":
+            print("Cleaning the airport...")
+            #THIS SHOULD WORK BUT NEEDS TESTING!!!!!!!
+            if any(CAFG_items.janitor in x for x in players_items) : #Gives extra money if player has janitors clothes
+                global player_money
+                player_money =+ 50
+                print("You cleaned the airport for 50€!")
+                print(f"Your current balance is {player_money}€.")
+            else:
+                player_money =+ 20
+                print("You cleaned the airport for 20€...")
+                print(f"Your current balance is {player_money}€.")
             return
         case _:
             print("Unknown item")
@@ -246,6 +263,7 @@ def itemchecker():
 #randomises shop at start of the turn
 def shoprandomiser(amount_of_items):
     # !!!!!!!!!!!!PLACEHOLDER!!!!!!!!!!!!
+    # UTILIZE LUCK IN THIS!
     shop_items.clear()
     list_of_items = CAFG_items.shop_items
     for i in range(amount_of_items):
