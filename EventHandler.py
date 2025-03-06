@@ -1,6 +1,8 @@
 import CAFG_items
 import random
 
+from CAFG_items import janitor
+
 #system global variables
 current_score = 0
 global_threat = 0
@@ -21,13 +23,14 @@ def turnhandler():
     timeunitrefresher()
     itemchecker()
     shoprandomiser(3)
-    threathandler()
-    #THE "1" IN threat IS A PLACEHOLDER, UPDATE THIS PROPORTIONAL TO time_units IN SOME WAY WHEN USING THEM!!!
-    eventhandler(1, player_luck) #Increases local threat with threat.
+    globalthreathandler()
+    localthreathandler(0,0) #increases local threat using time units
+    timehandler(0,0)
+    eventhandler(local_threat, player_luck)
     actionhandler()
     movementhandler()
 
-def threathandler():
+def globalthreathandler():
     #handles global_threat
     global current_country
     #!!!!!PLACEHOLDER!!!!!
@@ -37,15 +40,24 @@ def threathandler():
     global_threat += previous_travel_distance * 1 #formula for increasing global threat
     return
 
-#handles the arrival events
-def eventhandler(threat, luck):
+def localthreathandler(timespent,threat):
+    global local_threat
     if not local_threat.get(current_country): #Checks if country has an assigned local_threat in [dict] yet. If not, adds one.
         if len(local_threat.keys())==0:
             local_threat.update({current_country: 0})
         local_threat.update({current_country: 0})
 
-    local_threat.update({current_country: local_threat.get(current_country)+threat}) #Increase local_threat for current country.
-    #vv these multipliers are placeholders vv
+    local_threat.update({current_country: local_threat.get(current_country)+(threat*timespent)}) #Increase local_threat for current country.
+
+def timehandler(timespent,threat):
+    global time_units
+    time_units -= timespent
+    localthreathandler(timespent,threat)
+
+
+#handles the arrival events
+def eventhandler(threat, luck):
+    #vv THESE MULTIPLIERS ARE PLACEHOLDERS vv
     event_luck = (local_threat.get(current_country) * 1) * (global_threat * 1) - (luck * 1)
     eventhandlersub(event_luck)
 
@@ -64,7 +76,7 @@ def eventhandlersub(event_luck):
         case 3:
             print("You spontaneously grew a moustache. You feel strangely at peace with the universe.")
             global time_units
-            time_units =+ 2
+            time_units += 2
         case 4:
             print("It's the anniversary of the airport! People are celebrating without a care in the world.")
             global local_threat
@@ -193,6 +205,7 @@ def actionbuy():
                 bought_item = shop_items[int(shop_item_number) - 1]
                 players_items.append(bought_item)
                 player_money -= shop_items[int(shop_item_number) - 1].price
+                timehandler(1,shop_items[int(shop_item_number) - 1].price) #uses 1 unit of time and increases local threat by 10 with said amount of time.
                 shop_items.pop(int(shop_item_number) - 1)
                 print(f"You bought {bought_item.name}")
                 print(f"Your balance: {player_money}")
@@ -227,32 +240,35 @@ def actioncheck():
 #allows you to do work
 def actionwork():
     print()
-    #here list of jobs
+    #PLACEHOLDER, REPLACE ONCE THERE'S MORE JOBS!
+    print("'clean' to clean airport")
     print()
     job_to_do = input("What work do you want to do (N to go back): ")
     if job_to_do == "N":
         return
     else:
         print()
-        actionusesub(job_to_do)
+        actionworksub(job_to_do)
 
 def actionworksub(used_job):
     match used_job:
         case "clean":
-            print("Cleaning the airport...")
             #THIS SHOULD WORK BUT NEEDS TESTING!!!!!!!
-            if any(CAFG_items.janitor in x for x in players_items) : #Gives extra money if player has janitors clothes
-                global player_money
-                player_money =+ 50
-                print("You cleaned the airport for 50€!")
+            global player_money
+            worktime=int(input(print("How long do you want to work for?")))
+            print("Cleaning the airport...")
+            if janitor in players_items: #Gives extra money if player has janitors clothes
+                player_money += 50*worktime
+                print(f"You cleaned the airport for {50*worktime}€!")
                 print(f"Your current balance is {player_money}€.")
             else:
-                player_money =+ 20
-                print("You cleaned the airport for 20€...")
+                player_money += 20*worktime
+                print(f"You cleaned the airport for {20*worktime}€...")
                 print(f"Your current balance is {player_money}€.")
+            timehandler(worktime,-5)
             return
         case _:
-            print("Unknown item")
+            print("Unknown job")
             return
 
 #checks for passive and active item effects at the start of the turn
