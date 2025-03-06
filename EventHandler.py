@@ -68,7 +68,7 @@ def eventhandlersub(event_luck):
         case 4:
             print("It's the anniversary of the airport! People are celebrating without a care in the world.")
             global local_threat
-            local_threat.update({current_country: local_threat.get(current_country)-5}) #drop local_threat
+            local_threat.update({current_country: local_threat.get(current_country)-5}) #drops local_threat by 5 units
         case _:
             print("It's a very boring airport! One star out of five!")
             return
@@ -137,12 +137,12 @@ def actionuse():
     if len(players_items) == 0:
         print("You have no items. Go buy some")
     else:
-        print("Your items")
-        print("_______________________________________________________")
+        print("Your items:")
+        print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
         for item in players_items:
             print(f"{item.name}\n"
                   f"{item.desc}\n"
-                  f"-------------------------------------------------------")
+                  f"---------------------------------------------------------------------------")
         print()
 
         continue_using = True
@@ -214,7 +214,8 @@ def actioncheck():
         while continue_using:
             print("Your items")
             print()
-
+            for item in players_items:
+                print(item)
             print()
             item_to_check = input("What item do you want to check (N to go back): ")
             if item_to_check == "N":
