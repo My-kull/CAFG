@@ -136,33 +136,39 @@ def actionusesub(used_item):
 
 #buys more items
 def actionbuy():
-    global player_money
+    global player_money, shop_items
     print(f"Your balance: {player_money}")
     print()
     list_of_item_names = []
-    for item in shop_items:
-        print(f"{shop_items.index(item) + 1} {item.name}: {item.price}€")
-        list_of_item_names.append(item.name)
-    print()
 
     continue_using = True
     while continue_using:
-        item_to_buy = input("What item do you want to buy (N to go back): ")
-        if item_to_buy == "N":
+        if len(shop_items) == 0:
+            print("You bought all the items. You lament that your shopping time has ended.")
             continue_using = False
-        elif not item_to_buy.isdigit():
-            print("Wrong input")
-        elif 0 <= int(item_to_buy) < list_of_item_names:
             continue
+        for item in shop_items:
+            print(f"{shop_items.index(item) + 1} {item.name}: {item.price}€")
+            list_of_item_names.append(item.name)
+        print()
+        shop_item_number = input("What item do you want to buy (N to go back): ")
+        if shop_item_number == "N":
+            continue_using = False
+        elif not shop_item_number.isdigit():
+            print("Wrong input")
+        elif 0 > int(shop_item_number) <= len(list_of_item_names):
+            print("Wrong input")
         else:
-            #!!!FIX THIS!!!
-            if shop_items[list_of_item_names.index(item_to_buy)].name > player_money:
+            if shop_items[int(shop_item_number) - 1].price > player_money:
                 print("The item is too expensive")
             else:
-                players_items.append(item_to_buy)
-                player_money -= checkprice(item_to_buy)
-                print(f"You bought {item_to_buy}")
+                bought_item = shop_items[int(shop_item_number) - 1]
+                players_items.append(bought_item)
+                player_money -= shop_items[int(shop_item_number) - 1].price
+                shop_items.pop(int(shop_item_number) - 1)
+                print(f"You bought {bought_item.name}")
                 print(f"Your balance: {player_money}")
+                print()
 
 def checkprice(item):
     #!!!!!!!!!!!!PLACEHOLDER!!!!!!!!!!!!
