@@ -26,7 +26,7 @@ def turnhandler():
     globalthreathandler()
     localthreathandler(0,0) #increases local threat using time units
     timehandler(0,0)
-    eventhandler(local_threat, player_luck)
+    eventhandler(player_luck)
     actionhandler()
     movementhandler()
 
@@ -56,7 +56,7 @@ def timehandler(timespent,threat):
 
 
 #handles the arrival events
-def eventhandler(threat, luck):
+def eventhandler(luck):
     #vv THESE MULTIPLIERS ARE PLACEHOLDERS vv
     event_luck = (local_threat.get(current_country) * 1) * (global_threat * 1) - (luck * 1)
     eventhandlersub(event_luck)
@@ -240,7 +240,8 @@ def actioncheck():
 #allows you to do work
 def actionwork():
     #PLACEHOLDER, REPLACE ONCE THERE'S MORE JOBS!
-    print("'clean' to clean airport")
+    print("'clean' to clean airport.")
+    print("'rob' to rob a random person.")
     print()
     job_to_do = input("What work do you want to do (N to go back): ")
     if job_to_do == "N":
@@ -250,9 +251,9 @@ def actionwork():
         actionworksub(job_to_do)
 
 def actionworksub(used_job):
+    global player_money
     match used_job:
         case "clean":
-            global player_money
             worktime = int(input("How long do you want to work for? "))
             print()
             print("Cleaning the airport...")
@@ -266,6 +267,13 @@ def actionworksub(used_job):
                 print(f"Your current balance is {player_money}€.")
             print()
             timehandler(worktime,-5) #Uses worktime amount of time_units and decreases the local threat by -5 per spent unit.
+            return
+        case "rob":
+            robbed=random.randint(1+player_luck,200+player_luck)
+            print(f"You robbed an random civilian for {robbed}€!")
+            player_money += robbed
+            # threat increases by 10 for every € stolen, player luck decreases this
+            localthreathandler(1,robbed*(10-(int(player_luck/10))))
             return
         case _:
             print("Unknown job")
