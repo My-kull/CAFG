@@ -4,6 +4,7 @@ import random
 #system global variables
 current_score = 0
 global_threat = 0
+local_threat = {}
 shop_items = []
 #player global variables
 time_units = 10
@@ -26,18 +27,28 @@ def turnhandler():
     movementhandler()
 
 def threathandler():
-    #handles threat
+    #handles global_threat
+    global current_country
+    current_country = "France"
     global global_threat
     global_threat += previous_travel_distance * 1 #formula for increasing global threat
     return
 
 #handles the arrival events
-def eventhandler(local_threat, luck):
-    event_luck = (local_threat * 1) * (global_threat * 1) - (luck * 1) #these multipliers are placeholders
+def eventhandler(threat, luck):
+    if not local_threat.get(current_country):
+        if len(local_threat.keys())==0:
+            local_threat.update({current_country: 0})
+        local_threat.update({current_country: 0})
+        local_threat.update({current_country:local_threat.get(current_country)+threat})
+    else:
+        local_threat.update({current_country: local_threat.get(current_country)+threat})
+    #vv these multipliers are placeholders vv
+    event_luck = (local_threat.get(current_country) * 1) * (global_threat * 1) - (luck * 1)
     eventhandlersub(event_luck)
 
 def eventhandlersub(event_luck):
-    event_happening = random.randint(1,3)
+    event_happening = random.randint(1,4)
     match event_happening:
         case 1:
             print("You gained your yearly tax returns... again?... YIPPII")
@@ -52,6 +63,10 @@ def eventhandlersub(event_luck):
             print("You spontaneously grew a moustache. You feel strangely at peace with the universe.")
             global time_units
             time_units =+ 2
+        case 4:
+            print("It's the anniversary of the airport! People are celebrating without a care in the world.")
+            global local_threat
+            local_threat.update({current_country: local_threat.get(current_country)-5})
         case _:
             print("It's a very boring airport! One star out of five!")
             return
@@ -88,6 +103,15 @@ def actionhandlersub(command):
         case "leave":
             print("Moving to the next country")
             return False
+
+        #made these two as a debugging tool, can possibly be left in the game?
+        case "localT":
+            print(local_threat)
+            return True
+        case "globalT":
+            print(global_threat)
+            return True
+
         case _:
             print("Unknown command (? for a list of commands)")
             return True
