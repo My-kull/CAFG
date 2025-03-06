@@ -15,7 +15,7 @@ free = 0
 #       Harvinainen.
 #       Erittäin harvinainen.
 
-# About
+# About attribute.price: price of the item, called values are at the very top of this file.
 
 # About attribute.use_time: positive [int]s give items the corresponding amount of use times
 #   (Once 0 item cant be used anymore). -1 gives an infinite amount of use times.
