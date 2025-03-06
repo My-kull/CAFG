@@ -139,5 +139,5 @@ shop_items = [invis_cape, lottery, luck_cookie, s_rabbit_paw, janitor]
 #for i in shop_items:
 #   print(f"{i.name:<30} --- {i.price:>10}")
 
-for i in shop_items:
-    print(f"{i.name} \n {i.desc} \n -------------------------------------------------------------")
+#for i in shop_items:
+#    print(f"{i.name} \n {i.desc} \n -------------------------------------------------------------")
