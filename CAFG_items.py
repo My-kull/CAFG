@@ -28,17 +28,6 @@ invis_cape.use_time = 1
 invis_cape.active = True
 #[local threat]/2 when used
 
-warhead = Item("Unstable Nuclear Warhead")
-warhead.desc = "A Nuclear Warhead. Obviously no one wants to arrest a man with an armed bomb.\nDue to its unstable nature however, there is a 0.5% chance it will detonate.\n\x1b[3mOh and by the way, don't ask how you are allowed onto ANY planes with THIS...\x1b[0m\n(Local threat stays at 0, -5% global threat)"
-warhead.rarity = "Erittäin Harvinainen"
-warhead.price = free  # it's free!
-warhead.use_time = -1
-warhead.active = False
-#0.5% for game to end. Local threat stays at 0, global threat grows by -5%
-
-#On a random turn= "The nuclear warhead is shaking!"
-#throw d20= 2-20 = "Nothing happened...", 1 = "Game over"
-
 lottery = Item("Falsified Lottery Coupon")
 lottery.desc = "With your skills- I mean luck, you modify-\n*ahem* you SOMEHOW manage to get a lottery coupon with the winning numbers!\nLucky you!"
 lottery.rarity = "Semi-harvinainen"
@@ -71,6 +60,7 @@ janitor.use_time = -1
 janitor.active = False
 #Under "Work", gives like 20€
 
+#below this, items are not used
 flightmaster = Item("Flight-masters Clothes")
 flightmaster.desc = "Allows you to disguise your self as a flight master\nand earn money while flying. Due to you not knowing how to fly however,\nthere is a slight chance you'll fall out of the sky(0.1%)."
 flightmaster.rarity = "Harvinainen"
@@ -95,8 +85,18 @@ tonnin_seteli.use_time = -1
 tonnin_seteli.active = False
 #Does absolutely nothing, reference to 'Kummeli'
 
-shop_items = [invis_cape, lottery, luck_cookie, janitor, flightmaster, bulletvest, tonnin_seteli]
+warhead = Item("Unstable Nuclear Warhead")
+warhead.desc = "A Nuclear Warhead. Obviously no one wants to arrest a man with an armed bomb.\nDue to its unstable nature however, there is a 0.5% chance it will detonate.\n\x1b[3mOh and by the way, don't ask how you are allowed onto ANY planes with THIS...\x1b[0m\n(Local threat stays at 0, -5% global threat)"
+warhead.rarity = "Erittäin Harvinainen"
+warhead.price = free  # it's free!
+warhead.use_time = -1
+warhead.active = False
+#0.5% for game to end. Local threat stays at 0, global threat grows by -5%
 
+#On a random turn= "The nuclear warhead is shaking!"
+#throw d20= 2-20 = "Nothing happened...", 1 = "Game over"
 
-for i in shop_items:
-    print(f"{i.name:<30} --- {i.price:>10}")
+shop_items = [invis_cape, lottery, luck_cookie, s_rabbit_paw, janitor]
+
+#for i in shop_items:
+#    print(f"{i.name:<30} --- {i.price:>10}")

@@ -1,6 +1,8 @@
+import CAFG_items
 import random
 
 #system global variables
+current_score = 0
 global_threat = 0
 shop_items = []
 #player global variables
@@ -17,14 +19,14 @@ current_country = "" #change this to the starting country
 def turnhandler():
     timeunitrefresher()
     itemchecker()
-    shoprandomiser(5)
+    shoprandomiser(3)
     threathandler()
     eventhandler(1, player_luck)
     actionhandler()
     movementhandler()
 
 def threathandler():
-    #handles
+    #handles threat
     global global_threat
     global_threat += previous_travel_distance * 1 #formula for increasing global threat
     return
@@ -44,7 +46,7 @@ def eventhandlersub(event_luck):
             return
         case 2:
             print("You found a bazaar in the basement of the airport! Time for a shopping spree!")
-            shoprandomiser(7)
+            shoprandomiser(5)
             return
         case 3:
             print("You spontaneously grew a moustache. You feel strangely at peace with the universe.")
@@ -137,8 +139,10 @@ def actionbuy():
     global player_money
     print(f"Your balance: {player_money}")
     print()
+    list_of_item_names = []
     for item in shop_items:
-        print(f"{item}: {checkprice(item)}€")
+        print(f"{shop_items.index(item) + 1} {item.name}: {item.price}€")
+        list_of_item_names.append(item.name)
     print()
 
     continue_using = True
@@ -146,8 +150,13 @@ def actionbuy():
         item_to_buy = input("What item do you want to buy (N to go back): ")
         if item_to_buy == "N":
             continue_using = False
+        elif not item_to_buy.isdigit():
+            print("Wrong input")
+        elif 0 <= int(item_to_buy) < list_of_item_names:
+            continue
         else:
-            if checkprice(item_to_buy) > player_money:
+            #!!!FIX THIS!!!
+            if shop_items[list_of_item_names.index(item_to_buy)].name > player_money:
                 print("The item is too expensive")
             else:
                 players_items.append(item_to_buy)
@@ -207,9 +216,10 @@ def itemchecker():
 #randomises shop at start of the turn
 def shoprandomiser(amount_of_items):
     # !!!!!!!!!!!!PLACEHOLDER!!!!!!!!!!!!
-    print("shop randomised")
     shop_items.clear()
-    shop_items.extend(["cheese", "wine", "nuclear warhead", "bread"])
+    list_of_items = CAFG_items.shop_items
+    for i in range(amount_of_items):
+        shop_items.append(list_of_items[random.randint(0, len(list_of_items)-1)])
     return
 
 #randomises jobs at the start of the turn
