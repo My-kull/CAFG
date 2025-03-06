@@ -9,16 +9,18 @@ free = 0
 
 # About attribute.rarity: Items rarity placeholder.
 #   Rarities ranging from most common to most rare:
-#       Todella yleinen.
-#       Yleinen.
-#       Semi harvinainen.
-#       Harvinainen.
-#       Erittäin harvinainen.
+#       * Todella yleinen.
+#       * Yleinen.
+#       * Semi harvinainen.
+#       * Harvinainen.
+#       * Erittäin harvinainen.
 
 # About attribute.price: price of the item, called values are at the very top of this file.
 
-# About attribute.use_time: positive [int]s give items the corresponding amount of use times
-#   (Once 0 item cant be used anymore). -1 gives an infinite amount of use times.
+# About attribute.use_time: positive [int]s give items the corresponding amount of use times.
+#   * Everytime an item is used, its value is updated as current value minus 1.
+#   * Once 0 item cant be used anymore.
+#   * -1 gives an infinite amount of use times.
 
 # About attribute.active: True means item is active, False means item is passive.
 
