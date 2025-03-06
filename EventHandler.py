@@ -138,11 +138,9 @@ def actionuse():
         print("You have no items. Go buy some")
     else:
         print("Your items:")
-        print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+        print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
         for item in players_items:
-            print(f"{item.name}\n"
-                  f"{item.desc}\n"
-                  f"---------------------------------------------------------------------------")
+            print(f"{item.name}\n")
         print()
 
         continue_using = True
@@ -212,10 +210,12 @@ def actioncheck():
     else:
         continue_using = True
         while continue_using:
-            print("Your items")
-            print()
+            print("Your items:")
+            print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
             for item in players_items:
-                print(item)
+                print(f"{item.name}\n"
+                      f"{item.desc}\n"
+                      f"___________________________________________________________________________")
             print()
             item_to_check = input("What item do you want to check (N to go back): ")
             if item_to_check == "N":
