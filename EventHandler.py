@@ -150,14 +150,14 @@ def actionuse():
         print("You have no items. Go buy some")
     else:
         print("Your items:")
-        print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+        print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
         for item in players_items:
-            print(f"{item.name}\n")
+            print(f"{players_items.index(item)+1} {item.name}\n")
         print()
 
         continue_using = True
         while continue_using:
-            item_to_use = (input("What item do you want to use (N to go back): "))
+            item_to_use = (input("What item do you want to use (Type number or N to go back): "))
             if item_to_use == "N":
                 continue_using = False
             else:
@@ -239,7 +239,6 @@ def actioncheck():
 
 #allows you to do work
 def actionwork():
-    print()
     #PLACEHOLDER, REPLACE ONCE THERE'S MORE JOBS!
     print("'clean' to clean airport")
     print()
@@ -253,7 +252,6 @@ def actionwork():
 def actionworksub(used_job):
     match used_job:
         case "clean":
-            #THIS SHOULD WORK BUT NEEDS TESTING!!!!!!!
             global player_money
             worktime=int(input(print("How long do you want to work for?")))
             print("Cleaning the airport...")
@@ -265,7 +263,7 @@ def actionworksub(used_job):
                 player_money += 20*worktime
                 print(f"You cleaned the airport for {20*worktime}€...")
                 print(f"Your current balance is {player_money}€.")
-            timehandler(worktime,-5)
+            timehandler(worktime,-5) #Uses worktime amount of time_units and decreases the local threat by -5 per spent unit.
             return
         case _:
             print("Unknown job")
@@ -280,7 +278,7 @@ def itemchecker():
 #randomises shop at start of the turn
 def shoprandomiser(amount_of_items):
     # !!!!!!!!!!!!PLACEHOLDER!!!!!!!!!!!!
-    # UTILIZE LUCK IN THIS!
+    # UTILIZE LUCK IN THIS!!
     shop_items.clear()
     list_of_items = CAFG_items.shop_items
     for i in range(amount_of_items):
