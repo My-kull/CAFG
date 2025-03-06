@@ -35,7 +35,7 @@ class Item:
         self.name = name
 
 
-invis_cape = Item("Invisibility Cloack")
+invis_cape = Item("Invisibility Cloak")
 invis_cape.desc = ("A cloack that makes you invisible.\n"
                    "When used, splits the local threat level in two\n"
                    "\n"
