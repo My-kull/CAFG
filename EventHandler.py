@@ -253,7 +253,8 @@ def actionworksub(used_job):
     match used_job:
         case "clean":
             global player_money
-            worktime=int(input(print("How long do you want to work for?")))
+            worktime = int(input("How long do you want to work for? "))
+            print()
             print("Cleaning the airport...")
             if janitor in players_items: #Gives extra money if player has janitors clothes
                 player_money += 50*worktime
@@ -263,6 +264,7 @@ def actionworksub(used_job):
                 player_money += 20*worktime
                 print(f"You cleaned the airport for {20*worktime}€...")
                 print(f"Your current balance is {player_money}€.")
+            print()
             timehandler(worktime,-5) #Uses worktime amount of time_units and decreases the local threat by -5 per spent unit.
             return
         case _:
