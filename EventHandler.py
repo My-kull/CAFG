@@ -14,13 +14,13 @@ player_money = 1000
 player_luck = 0
 players_items = []
 previous_travel_distance = 0
-current_country = "" #change this to the starting country
+current_country = "France" #change this to the starting country
 
 #handlers that perform the basic functions
 
 #handles the holistic airport visits
 def turnhandler():
-    timeunitrefresher()
+    timeunitrefresher(10)
     itemchecker()
     shoprandomiser(3)
     globalthreathandler()
@@ -117,8 +117,10 @@ def actionhandlersub(command):
         case "leave":
             print("Moving to the next country")
             return False
-
         #made these two as a debugging tool, can possibly be left in the game?
+        case "stats":
+            checkstats()
+            return True
         case "localT":
             print(local_threat)
             return True
@@ -142,6 +144,21 @@ def listcommands():
     print(f"{'chill' :<10} ---  just take it easy")
     print(f"{'leave' :<10} ---  go to the next airport")
     print(f"{'?' :<10} ---  check your commands")
+    print()
+
+#prints player and game stats
+def checkstats():
+    print("Game status")
+    print(f"Score is {current_score}")
+    print(f"Global threat is {global_threat}")
+    print(f"Current country is {current_country}")
+    print(f"Local treat is {local_threat.get(current_country)}")
+    print()
+
+    print("Your status")
+    print(f"Your balance: {player_money}€")
+    print(f"Your luck: {player_luck}")
+    print(f"The timeunits you have: {time_units}")
     print()
 
 #uses your items
@@ -196,7 +213,7 @@ def actionbuy():
             continue_using = False
         elif not shop_item_number.isdigit():
             print("Wrong input")
-        elif 0 > int(shop_item_number) <= len(list_of_item_names):
+        elif 0 > int(shop_item_number) or len(list_of_item_names) <= int(shop_item_number):
             print("Wrong input")
         else:
             if shop_items[int(shop_item_number) - 1].price > player_money:
@@ -211,31 +228,19 @@ def actionbuy():
                 print(f"Your balance: {player_money}")
                 print()
 
-#onks tälle checkpricelle enää mitää käyttöö? Siis kauppaha jo printtaa niien hinnat oikein
-def checkprice(item):
-    #!!!!!!!!!!!!PLACEHOLDER!!!!!!!!!!!!
-    return 100
-
 #checks your items
 def actioncheck():
     if len(players_items) == 0:
         print("You have no items. Go buy some")
     else:
-        continue_using = True
-        while continue_using:
-            print("Your items:")
-            print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
-            for item in players_items:
-                print(f"{item.name}\n"
-                      f"{item.desc}\n"
-                      f"___________________________________________________________________________")
-            print()
-            item_to_check = input("What item do you want to check (N to go back): ")
-            if item_to_check == "N":
-                continue_using = False
-            else:
-                pass
-                #get item_to_check description
+
+        print("Your items:")
+        print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+        for item in players_items:
+            print(f"{item.name}\n"
+                  f"{item.desc}\n"
+                  f"___________________________________________________________________________")
+        print()
 
 #allows you to do work
 def actionwork():
@@ -297,12 +302,13 @@ def shoprandomiser(amount_of_items):
 
 #randomises jobs at the start of the turn
 def jobrandomiser():
+    #currently unused
     return
 
 #refreshesh usable time units at the start of the turn
-def timeunitrefresher():
+def timeunitrefresher(amount):
     global time_units
-    time_units = 10
+    time_units = amount
 
 #handles the movement from country to country
 def movementhandler():
