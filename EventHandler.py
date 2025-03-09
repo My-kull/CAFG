@@ -20,15 +20,16 @@ current_country = "France" #change this to the starting country
 
 #handles the holistic airport visits
 def turnhandler():
-    timeunitrefresher(10)
-    itemchecker()
-    shoprandomiser(3)
-    globalthreathandler()
-    localthreathandler(0,0) #increases local threat using time units
-    timehandler(0,0)
-    eventhandler(player_luck)
-    actionhandler()
-    movementhandler()
+    while True:
+        timeunitrefresher(10)
+        itemchecker()
+        shoprandomiser(3)
+        globalthreathandler()
+        localthreathandler(0,0) #increases local threat using time units
+        timehandler(0,0)
+        eventhandler(player_luck)
+        actionhandler()
+        movementhandler()
 
 def globalthreathandler():
     #handles global_threat
@@ -116,7 +117,11 @@ def actionhandlersub(command):
             return True
         case "leave":
             print("Moving to the next country")
-            return False
+            leaveornot = input("Do you want to leave the airport?(y/N): ")
+            if leaveornot == "y":
+                return False
+            else:
+                return True
         #made these two as a debugging tool, can possibly be left in the game?
         case "stats":
             checkstats()
@@ -168,8 +173,10 @@ def actionuse():
     else:
         print("Your items:")
         print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+        item_number = 0
         for item in players_items:
-            print(f"{players_items.index(item)+1} {item.name}\n")
+            print(f"{item_number + 1} {item.name}\n")
+            item_number += 1
         print()
 
         continue_using = True
@@ -204,10 +211,13 @@ def actionbuy():
             print("You bought all the items. You lament that your shopping time has ended.")
             continue_using = False
             continue
+        item_number = 0
         for item in shop_items:
-            print(f"{shop_items.index(item) + 1} {item.name}: {item.price}€")
+            print(f"{item_number + 1} {item.name}: {item.price}€")
             list_of_item_names.append(item.name)
+            item_number+=1
         print()
+
         shop_item_number = input("What item do you want to buy (N to go back): ")
         if shop_item_number == "N":
             continue_using = False
@@ -218,6 +228,7 @@ def actionbuy():
         else:
             if shop_items[int(shop_item_number) - 1].price > player_money:
                 print("The item is too expensive")
+                print()
             else:
                 bought_item = shop_items[int(shop_item_number) - 1]
                 players_items.append(bought_item)
@@ -295,9 +306,8 @@ def shoprandomiser(amount_of_items):
     # !!!!!!!!!!!!PLACEHOLDER!!!!!!!!!!!!
     # UTILIZE LUCK IN THIS!!
     shop_items.clear()
-    list_of_items = CAFG_items.shop_items
     for i in range(amount_of_items):
-        shop_items.append(list_of_items[random.randint(0, len(list_of_items)-1)])
+        shop_items.append(CAFG_items.shop_items[random.randint(0, len(CAFG_items.shop_items)-1)])
     return
 
 #randomises jobs at the start of the turn
@@ -312,6 +322,27 @@ def timeunitrefresher(amount):
 
 #handles the movement from country to country
 def movementhandler():
-    return
+    #placeholder, replace with real code
+    choiceleaveorstay = ""
+    while True:
+        choiceleaveorstay = input("Do you want to stay in the country or leave the country?(leave/stay): ")
+        if choiceleaveorstay == "leave" or choiceleaveorstay == "stay":
+            break
+    global previous_travel_distance
+    if choiceleaveorstay == "leave":
+        print("Moving to the next country")
+        previous_travel_distance = 1000
+    elif choiceleaveorstay == "leave":
+        print("Moving to the next airport within the country")
+        previous_travel_distance = 200
+    else:
+        print("Something went wrong")
+
+def deathhandler():
+    print()
+    print("You are dead")
+    print()
+    print(f"Your final score is {current_score}")
+    quit()
 
 turnhandler()
