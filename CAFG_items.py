@@ -146,10 +146,10 @@ bulletvest.active = True
 
 tonnin_seteli = Item("Kahvi + keksi")
 tonnin_seteli.desc = ("Wasn't this suppose to cost just 2€?\n"
-                      "You did give a 1000€, right? There is no way it wasn't 1000€...\n"
-                      "Are you absolutely sure it was 1000€ you gave? That was 1000€... \n"
+                      "You did give a 1k €, right? There is no way it wasn't 1k €...\n"
+                      "Are you absolutely sure it was 1k € you gave? That was 1k €... \n"
                       "\n"
-                      "\x1b[3m'Se oli tonnin seteli… enks mä antanu tonnin setelin?'\x1b[0m")
+                      "\x1b[3m'Se oli tonnin seteli... enks mä antanu tonnin setelin?'\x1b[0m")
 tonnin_seteli.rarity = "Erittäin harvinainen"
 tonnin_seteli.price = very_cheap  # Se oli tonnin seteli...
 tonnin_seteli.use_time = -1
