@@ -145,10 +145,9 @@ bulletvest.active = True
 #
 
 tonnin_seteli = Item("Kahvi + keksi")
-tonnin_seteli.desc = ("You think you may have gotten scammed...\n"
-                      "in fact you are pretty sure you did get scammed.\n"
+tonnin_seteli.desc = ("Wasn't this suppose to cost just 2€?\n"
                       "You did give a 1000€, right? There is no way it wasn't 1000€...\n"
-                      "It was 1000€ you gave, didn't you? That was 1000€... \n"
+                      "Are you absolutely sure it was 1000€ you gave? That was 1000€... \n"
                       "\n"
                       "\x1b[3m'Se oli tonnin seteli… enks mä antanu tonnin setelin?'\x1b[0m")
 tonnin_seteli.rarity = "Erittäin harvinainen"
