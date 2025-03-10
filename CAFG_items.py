@@ -46,17 +46,29 @@ invis_cape.use_time = 1
 invis_cape.active = True
 #[local threat]/2 when used
 
-lottery = Item("Falsified Lottery Coupon")
-lottery.desc = ("With your skills- I mean luck, you modify-\n"
+lottery_fake = Item("Falsified Lottery Coupon")
+lottery_fake.desc = ("With your skills- I mean luck, you modify-\n"
                 "*ahem* you SOMEHOW manage to get a lottery coupon with the winning numbers!\n"
                 "Lucky you!\n"
                 "\n"
-                "(Gives like a 1000€)")  #PLACEHOLDER!!!!!!!!!!!!!!!!!!!!11
-lottery.rarity = "Semi-harvinainen"
-lottery.price = expensive
-lottery.use_time = 1
-lottery.type = True
-#Gives like 1000€
+                "(Gives between 1 000€ and 3 000€, but increases local threat by 3 000 per use.)")
+lottery_fake.rarity = "Semi-harvinainen"
+lottery_fake.price = expensive
+lottery_fake.use_time = 1
+lottery_fake.type = True
+#Gives 1000-3000€, threat up by 5 000 no matter the outcome.
+
+lottery_coupon = Item("Legit Lottery Coupon")
+lottery_coupon.desc = (f"An actually legit 100% real lottery coupon that's not gonna get you in trouble!\n"
+                       f"May not give you a lot though...\n"
+                       f"\n"
+                       f"(Theres a chance to get up to 10 000€!! Statistically guaranteed after 10 000 coupons!)")
+lottery_coupon.rarity = "Todella yleinen"
+lottery_coupon.price = cheap
+lottery_coupon.use_time = 1
+lottery_coupon.active = True
+#50% chance to get nothing, 20% for 10-50€, 10% for 50-100€, 10% for 100-500€
+# 5% for 500€-700€, 3% for 700€-1000, 1.99% for 1000-2000€, 0.01% 10 000€
 
 luck_cookie = Item("Fortune Cookie")
 luck_cookie.desc = ("A traditional chinese cookie that tells your fortune!\n"
@@ -67,13 +79,39 @@ luck_cookie.use_time = 1
 luck_cookie.active = True
 #Increases luck, possibly add a small chance to decrease it instead?
 
+pot_brownie = Item("A 'North-American' chocolate brownie")
+pot_brownie.desc= (f"A brownie with a distinct 'plant -like smell'. It tastes funny.\n"
+                   f"\n(When consumed, +3 time units, local threat -1000)")
+pot_brownie.rarity = "Semi harvinainen"
+pot_brownie.price = average
+pot_brownie.use_time = 1
+pot_brownie.active = True
+#get high as a kite maaan
+
+snow_globe = Item("Snow globe")
+snow_globe.desc = ("A Snow globe suvenier.\n"
+                   "Snow falls when you shake it, its fun to look at idk.\n"
+                   "\n(+100 score)")
+snow_globe.rarity = "Harvinainen"
+snow_globe.price = average
+snow_globe.use_time = -1
+snow_globe.active = False
+
+arcade_ticket = Item("Arcade ticket")
+arcade_ticket.desc = ("A ticket to the arcade where you can play games and have fun!\n"
+                      "\n(+100 score)")
+arcade_ticket.rarity = "Semi harvinainen"
+arcade_ticket.price = very_cheap
+arcade_ticket.use_time = 1
+arcade_ticket.active = True
+
 s_rabbit_paw = Item("Space-rabbit Foot")
 s_rabbit_paw.desc = ("Straight from the vast prairies of space.\n"
                      "\n(+luck)")
 s_rabbit_paw.rarity = "Harvinainen"
 s_rabbit_paw.price = expensive
 s_rabbit_paw.use_time = -1
-s_rabbit_paw.active = True
+s_rabbit_paw.active = False
 #Adds a certain % buff to luck.
 
 janitor = Item("Janitors Clothes")
@@ -110,7 +148,7 @@ tonnin_seteli = Item("Kahvi + keksi")
 tonnin_seteli.desc = ("You think you may have gotten scammed...\n"
                       "in fact you are pretty sure you did get scammed.\n"
                       "You did give a 1000€, right? There is no way it wasn't 1000€...\n"
-                      "It was 1000€ you gave, didn't you? It was 1000€... \n"
+                      "It was 1000€ you gave, didn't you? That was 1000€... \n"
                       "\n"
                       "\x1b[3m'Se oli tonnin seteli… enks mä antanu tonnin setelin?'\x1b[0m")
 tonnin_seteli.rarity = "Erittäin harvinainen"
@@ -134,7 +172,7 @@ warhead.active = False
 #Alternatively: On start of a turn, theres ~1-5% to print= "The nuclear warhead is shaking!"
 #Then game throws a d20= if 2-20 = print "Nothing happened...", if 1 = "Game over"
 
-shop_items = [invis_cape, lottery, luck_cookie, s_rabbit_paw, janitor]
+shop_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, s_rabbit_paw, janitor, pot_brownie, tonnin_seteli]
 
 #for i in shop_items:
 #   print(f"{i.name:<30} --- {i.price:>10}")
