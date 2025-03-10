@@ -152,7 +152,7 @@ tonnin_seteli.desc = ("You think you may have gotten scammed...\n"
                       "\n"
                       "\x1b[3m'Se oli tonnin seteli… enks mä antanu tonnin setelin?'\x1b[0m")
 tonnin_seteli.rarity = "Erittäin harvinainen"
-tonnin_seteli.price = 1000  # Tonnin seteli...
+tonnin_seteli.price = very_cheap  # Se oli tonnin seteli...
 tonnin_seteli.use_time = -1
 tonnin_seteli.active = False
 #Does absolutely nothing, reference to 'Kummeli'
