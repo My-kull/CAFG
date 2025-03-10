@@ -233,6 +233,16 @@ def actionbuy():
                 print()
             else:
                 bought_item = shop_items[int(shop_item_number) - 1]
+                if bought_item == CAFG_items.tonnin_seteli:
+                    player_money -= 994
+                    print(f"\x1b[3mYou find that 1000€ bill is the smallest you have so you decide to give it.\n"
+                          f"The cashier gives very little change and then faces back to you.\n"
+                          f"All though now he is just staring off into space with a blank expression on his face.\n"
+                          f"You start to question if you actually gave 1000€ or not and try to ask several times-\n"
+                          f"where the rest of the change is but you get no response. The cashier is like a statue.\n"
+                          f"It's like his consciousness left this plane of existence. You wave your arm in front of him,\n"
+                          f"but its no use. The money is gone now. No way to get it back.\n"
+                          f"Are you certain it was actually 1000€ you gave? \x1b[0m")
                 players_items.append(bought_item)
                 player_money -= shop_items[int(shop_item_number) - 1].price
                 timehandler(1,shop_items[int(shop_item_number) - 1].price) #uses 1 unit of time and increases local threat by 10 with said amount of time.
