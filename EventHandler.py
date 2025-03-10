@@ -15,12 +15,16 @@ player_luck = 0
 players_items = []
 previous_travel_distance = 0
 current_country = "France" #change this to the starting country
+#part of the movementhandler placeholder
+global_country_index = 0
 
 #handlers that perform the basic functions
 
 #handles the holistic airport visits
 def turnhandler():
     while True:
+        global current_score
+        current_score += 100
         timeunitrefresher(10)
         itemchecker()
         shoprandomiser(3)
@@ -36,7 +40,6 @@ def globalthreathandler():
     global current_country
     #!!!!!PLACEHOLDER!!!!!
     #!!!!!UPDATE THIS WITH THE country.name FROM THE DATABASE USING THE PATH airport.iso_country = country.iso_country!!!!!
-    current_country = "France"
     global global_threat
     global_threat += previous_travel_distance * 1 #formula for increasing global threat
     return
@@ -54,7 +57,6 @@ def timehandler(timespent,threat):
     global time_units
     time_units -= timespent
     localthreathandler(timespent,threat)
-
 
 #handles the arrival events
 def eventhandler(luck):
@@ -328,16 +330,32 @@ def movementhandler():
         choiceleaveorstay = input("Do you want to stay in the country or leave the country?(leave/stay): ")
         if choiceleaveorstay == "leave" or choiceleaveorstay == "stay":
             break
+    global current_score
     global previous_travel_distance
+    global global_country_index
+    global current_country
+    list_of_countries = ["France", "Russia", "USA", "China",
+                         "Japan", "Germany", "UK", "Australia",
+                         "India", "Canada", "Spain", "Italy",
+                         "Finland", "Turkey", "Brazil", "New Zealand"]
     if choiceleaveorstay == "leave":
         print("Moving to the next country")
+        current_score += 300
         previous_travel_distance = 1000
+        global_country_index += 1
+        if global_country_index < len(list_of_countries):
+            current_country = list_of_countries[global_country_index]
+        else:
+            global_country_index = 0
+            current_country = list_of_countries[global_country_index]
     elif choiceleaveorstay == "leave":
         print("Moving to the next airport within the country")
+        current_score += 100
         previous_travel_distance = 200
     else:
         print("Something went wrong")
 
+#you are dead
 def deathhandler():
     print()
     print("You are dead")
