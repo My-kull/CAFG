@@ -151,7 +151,7 @@ tonnin_seteli.desc = ("Wasn't this suppose to cost just 2€?\n"
                       "They did give change back from it but it was so little...\n"
                       "Are you absolutely sure it was 1k € you gave? That was 1k €... \n"
                       "\n"
-                      "\x1b[3m'Se oli tonnin seteli... enks mä antanu tonnin setelin?'\x1b[0m")
+                      "\x1b[3m'Se oli tonnin seteli… Enks mä antanu tonnin setelin?'\x1b[0m")
 tonnin_seteli.rarity = "Erittäin harvinainen"
 tonnin_seteli.price = very_cheap  # Se oli tonnin seteli...
 tonnin_seteli.use_time = -1
