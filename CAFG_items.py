@@ -67,7 +67,7 @@ lottery_coupon.desc = (f"An actually legit 100% real lottery coupon that's not g
                        f"But theres a chance to get up to 10 000€! Statistically guaranteed after 10 000 coupons!!\n"
                        f"\n"
                        f"- 50% nothing,\n"
-                       f"- ranging from 20% to 5% theres a chance to get from 10€ to 1000€,\n"
+                       f"- ranging from 20% to 5% theres a chance to get from 1€ to 2000€,\n"
                        f"- 0.01% chance to get the jackpot of 10 000€)")
 lottery_coupon.buy = "Surely this one's the one to make you rich! "
 lottery_coupon.rarity = "Todella yleinen"
