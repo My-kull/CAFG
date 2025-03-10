@@ -282,17 +282,29 @@ def actionworksub(used_job):
     global player_money
     match used_job:
         case "clean":
-            worktime = int(input("How long do you want to work for? "))
-            print()
-            print("Cleaning the airport...")
-            if janitor in players_items: #Gives extra money if player has janitors clothes
-                player_money += 50*worktime
-                print(f"You cleaned the airport for {50*worktime}€!")
-                print(f"Your current balance is {player_money}€.")
-            else:
-                player_money += 20*worktime
-                print(f"You cleaned the airport for {20*worktime}€...")
-                print(f"Your current balance is {player_money}€.")
+            stopwork = False
+            worktime=0
+            while not stopwork:
+                worktime = int(input("How long do you want to work for?(N to go back): "))
+                print()
+                if worktime == int():
+                    print("Cleaning the airport...")
+                    if janitor in players_items: #Gives extra money if player has janitors clothes
+                        player_money += 50*worktime
+                        print(f"You cleaned the airport for {50*worktime}€!")
+                        print(f"Your current balance is {player_money}€.")
+                        stopwork=True
+                    else:
+                        player_money += 20*worktime
+                        print(f"You cleaned the airport for {20*worktime}€...")
+                        print(f"Your current balance is {player_money}€.")
+                        stopwork= True
+                elif worktime == "N":
+                    print("You've decided you don't want to work.")
+                    stopwork=True
+                else:
+                    print("Invalid work time.")
+                    print()
             print()
             timehandler(worktime,-5) #Uses worktime amount of time_units and decreases the local threat by -5 per spent unit.
             return
