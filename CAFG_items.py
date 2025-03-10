@@ -146,7 +146,9 @@ bulletvest.active = True
 
 tonnin_seteli = Item("Kahvi + keksi")
 tonnin_seteli.desc = ("Wasn't this suppose to cost just 2€?\n"
-                      "You did give a 1k €, right? There is no way it wasn't 1k €...\n"
+                      "That was 1k € you gave, right? There is no way it wasn't 1k €...\n"
+                      "But where's the change then? They couldn't possibly miss-calculate it, right?\n"
+                      "They did give change back from it but it was so little...\n"
                       "Are you absolutely sure it was 1k € you gave? That was 1k €... \n"
                       "\n"
                       "\x1b[3m'Se oli tonnin seteli... enks mä antanu tonnin setelin?'\x1b[0m")
