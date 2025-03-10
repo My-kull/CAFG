@@ -217,17 +217,17 @@ def actionusesub(used_item):
             if lottery <= 5000:
                 money = 0
             elif 5000 < lottery < 7000:
-                money = random.randint(10, 50)
+                money = random.randint(1, 5)
             elif 7000 < lottery < 8000:
-                money = random.randint(50, 100)
+                money = random.randint(5, 10)
             elif 8000 < lottery < 9000:
-                money = random.randint(100, 500)
+                money = random.randint(10, 50)
             elif 9000 < lottery < 9500:
-                money = random.randint(500, 700)
+                money = random.randint(50, 100)
             elif 9500 < lottery < 9800:
-                money = random.randint(700, 1000)
+                money = random.randint(100, 500)
             elif 9800 < lottery < 9999:
-                money = random.randint(1000, 2000)
+                money = random.randint(500, 2000)
             else:
                 money = 10000
             print(f"Congratulations! You got {money}€ from the lottery!")
@@ -254,7 +254,8 @@ def actionusesub(used_item):
             addtime = 4
             time_units += addtime
             print(f"You eat the brownie...\n"
-                  f"You feel like theres no longer a rush to anywhere anymore.(+{addtime} time units)")
+                  f"You feel like theres no longer a rush to anywhere anymore...\n"
+                  f"(Gained {addtime} time units)")
             return
 
         case CAFG_items.tonnin_seteli:
@@ -266,13 +267,14 @@ def actionusesub(used_item):
             return
 
         case CAFG_items.arcade_ticket:
-            print(f"You visit a local arcade to play some games and have some fun!")
+            print(f"You visit a local arcade to play some games and have some fun! Yippee!")
             current_score += 100
             return
 
         case CAFG_items.snow_globe:
             print(f"You shake the snowglobe and watch the artificial snowflakes fall...\n"
-                  f"What fun!")
+                  f"...\n"
+                  f"What fun!!!")
             current_score += 100
             return
 
