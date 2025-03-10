@@ -1,7 +1,6 @@
 import CAFG_items
 import random
 
-from CAFG_items import janitor
 
 #system global variables
 current_score = 0
@@ -65,7 +64,7 @@ def eventhandler(luck):
     eventhandlersub(event_luck)
 
 def eventhandlersub(event_luck):
-    event_happening = random.randint(1,4)
+    event_happening = random.randint(0,4)
     match event_happening:
         case 1:
             print("You gained your yearly tax returns... again?... YIPPII")
@@ -183,21 +182,98 @@ def actionuse():
 
         continue_using = True
         while continue_using:
-            item_to_use = (input("What item do you want to use (Type number or N to go back): "))
+            item_to_use = input("What item do you want to use (Type number or N to go back): ")
             if item_to_use == "N":
                 continue_using = False
+            elif not item_to_use.isdigit():
+                print()
+                print("Wrong input!")
             else:
                 actionusesub(item_to_use)
 
 def actionusesub(used_item):
     # here the match case structure for item use
-    match used_item:
-        case "nuke":
-            print("You've blown up the airport, a whole part of the country and yourself.")
-            deathhandler()
+    use_item = players_items[int(used_item) - 1]
+    print(f"You've decided to use {use_item.name}")
+    global time_units, player_money, current_score, local_threat, player_luck
+    if players_items[int(used_item) - 1].active:
+        players_items.pop(int(used_item) - 1)
+        print("Item used.")
+        current_score += 50
+        time_units -= 1
+    else:
+        print("Item is passive.")
+    print()
+    match use_item:
+        case CAFG_items.lottery_fake:
+            money = random.randint(1000, 3000)
+            local_threat[current_country] += 3000 - (player_luck // 100)
+            print(f"You manage to get {money}€, but now you are in trouble!")
+            player_money += money
             return
-        case _:
-            print("Unknown item")
+
+        case CAFG_items.lottery_coupon:
+            lottery = random.randint(0, 10000) + (player_luck // 100)
+            if lottery <= 5000:
+                money = 0
+            elif 5000 < lottery < 7000:
+                money = random.randint(10, 50)
+            elif 7000 < lottery < 8000:
+                money = random.randint(50, 100)
+            elif 8000 < lottery < 9000:
+                money = random.randint(100, 500)
+            elif 9000 < lottery < 9500:
+                money = random.randint(500, 700)
+            elif 9500 < lottery < 9800:
+                money = random.randint(700, 1000)
+            elif 9800 < lottery < 9999:
+                money = random.randint(1000, 2000)
+            else:
+                money = 10000
+            print(f"Congratulations! You got {money}€ from the lottery!")
+            player_money += money
+            return
+
+        case CAFG_items.invis_cape:
+            local_threat[current_country] = local_threat[current_country] // 2
+            print("The cape made you harder to track! (Decreased local threat by 50%)")
+            return
+
+        case CAFG_items.luck_cookie:
+            chance = random.randint(1, 6)
+            if chance == 1:
+                player_luck += 10
+                luck = 10
+            else:
+                player_luck -= 10
+                luck = -10
+            print(f"You read the fortune from the cookie and got {luck} luck!")
+            return
+
+        case CAFG_items.pot_brownie:
+            addtime = 4
+            time_units += addtime
+            print(f"You eat the brownie...\n"
+                  f"You feel like theres no longer a rush to anywhere anymore.(+{addtime} time units)")
+            return
+
+        case CAFG_items.tonnin_seteli:
+            print(f"You ponder at the purchase. It cost you 1000€...\n"
+                f"You've forgotten what the price was suppose to even be, why didn't the cashier give back any change?\n"
+                f"Was it actually 1000€? Is this some special coffee? Or some caviar cookie?\n"
+                f"Now you are questioning if you actually gave 1000€ for it or not...\n"
+                f"You don't even feel like eating this...")
+            return
+
+        case CAFG_items.arcade_ticket:
+            print(f"You visit a local arcade to play some games and have some fun!")
+            current_score += 100
+            return
+
+        case CAFG_items.snow_globe:
+            print(f"You shake the snowglobe and watch the artificial snowflakes fall...\n"
+                  f"What fun!")
+            current_score += 100
             return
 
 #buys more items
@@ -239,8 +315,10 @@ def actionbuy():
                 player_money -= shop_items[int(shop_item_number) - 1].price
                 timehandler(1,shop_items[int(shop_item_number) - 1].price) #uses 1 unit of time and increases local threat by 10 with said amount of time.
                 shop_items.pop(int(shop_item_number) - 1)
+                print()
                 print(f"You bought {bought_item.name}")
                 print(bought_item.buy)
+                print()
                 print(f"Your balance: {player_money}")
                 print()
 
@@ -276,30 +354,31 @@ def actionworksub(used_job):
     match used_job:
         case "clean":
             stopwork = False
-            worktime=0
             while not stopwork:
-                worktime = int(input("How long do you want to work for?(N to go back): "))
+                worktime = input("How long do you want to work for?(N to go back): ")
                 print()
-                if worktime == int():
+                if worktime == "N":
+                    print("You've decided you didn't want to clean the airport.")
+                    stopwork = True
+                elif not worktime.isdigit():
+                    print("Invalid work time.")
+                    print()
+                else:
                     print("Cleaning the airport...")
-                    if janitor in players_items: #Gives extra money if player has janitors clothes
-                        player_money += 50*worktime
-                        print(f"You cleaned the airport for {50*worktime}€!")
+                    if CAFG_items.janitor in players_items: #Gives extra money if player has janitors clothes
+                        money = 50*int(worktime)
+                        player_money += money
+                        print(f"You cleaned the airport for {money}€!")
                         print(f"Your current balance is {player_money}€.")
                         stopwork=True
                     else:
-                        player_money += 20*worktime
-                        print(f"You cleaned the airport for {20*worktime}€...")
+                        money = 20*int(worktime)
+                        player_money += money
+                        print(f"You cleaned the airport for {money}€...")
                         print(f"Your current balance is {player_money}€.")
                         stopwork= True
-                elif worktime == "N":
-                    print("You've decided you don't want to work.")
-                    stopwork=True
-                else:
-                    print("Invalid work time.")
-                    print()
-            print()
-            timehandler(worktime,-5) #Uses worktime amount of time_units and decreases the local threat by -5 per spent unit.
+                print()
+                timehandler(int(worktime),-5) #Uses worktime amount of time_units and decreases the local threat by -5 per spent unit.
             return
         case "rob":
             robbed=random.randint(1+player_luck,200+player_luck)
