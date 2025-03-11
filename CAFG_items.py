@@ -47,7 +47,6 @@ invis_cape.rarity = "Harvinainen"
 invis_cape.price = costly
 invis_cape.use_time = 1
 invis_cape.active = True
-invis_cape.itemid = 1
 #[local threat]/2 when used
 
 
@@ -62,7 +61,6 @@ lottery_fake.rarity = "Semi-harvinainen"
 lottery_fake.price = expensive
 lottery_fake.use_time = 1
 lottery_fake.type = True
-lottery_fake.itemid = 2
 #Gives 1000-3000€, threat up by 5 000 no matter the outcome.
 
 
@@ -79,7 +77,6 @@ lottery_coupon.rarity = "Todella yleinen"
 lottery_coupon.price = cheap
 lottery_coupon.use_time = 1
 lottery_coupon.active = True
-lottery_coupon.itemid = 3
 #50% chance to get nothing, 20% for 10-50€, 10% for 50-100€, 10% for 100-500€
 # 5% for 500€-700€, 3% for 700€-1000, 1.99% for 1000-2000€, 0.01% 10 000€
 
@@ -93,7 +90,6 @@ luck_cookie.rarity = "Yleinen"
 luck_cookie.price = cheap
 luck_cookie.use_time = 1
 luck_cookie.active = True
-luck_cookie.itemid = 4
 #Increases luck, possibly add a small chance to decrease it instead?
 
 
@@ -107,7 +103,6 @@ energydrink.rarity = "Semi harvinainen"
 energydrink.price = average
 energydrink.use_time = 1
 energydrink.active = True
-energydrink.itemid = 5
 #pärisemää :D
 
 
@@ -121,7 +116,6 @@ snow_globe.rarity = "Harvinainen"
 snow_globe.price = average
 snow_globe.use_time = -1
 snow_globe.active = False
-snow_globe.itemid = 6
 #score
 
 arcade_ticket = Item("Arcade ticket")
@@ -133,7 +127,6 @@ arcade_ticket.rarity = "Semi harvinainen"
 arcade_ticket.price = very_cheap
 arcade_ticket.use_time = 1
 arcade_ticket.active = True
-arcade_ticket.itemid = 7
 #scoreeeeeeeeeee
 
 s_rabbit_paw = Item("Space-rabbit Foot")
@@ -145,7 +138,6 @@ s_rabbit_paw.rarity = "Harvinainen"
 s_rabbit_paw.price = expensive
 s_rabbit_paw.use_time = -1
 s_rabbit_paw.active = False
-s_rabbit_paw.itemid = 8
 #Adds a certain % buff to luck.
 
 
@@ -158,7 +150,6 @@ janitor.rarity = "Yleinen"
 janitor.price = costly
 janitor.use_time = -1
 janitor.active = False
-janitor.itemid = 9
 #Under "Work", gives like 20€
 
 
@@ -174,7 +165,6 @@ flightmaster.rarity = "Harvinainen"
 flightmaster.price = expensive
 flightmaster.use_time = -1
 flightmaster.active = False
-flightmaster.itemid = 10
 #Under "Work", gives like 100€
 
 
@@ -189,7 +179,6 @@ bulletvest.rarity = "Harvinainen"
 bulletvest.price = expensive
 bulletvest.use_time = 1
 bulletvest.active = False
-bulletvest.itemid = 11
 #gives the player +50 health(once that is added)
 
 
@@ -213,7 +202,6 @@ tonnin_seteli.rarity = "Erittäin harvinainen"
 tonnin_seteli.price = very_cheap  # Se oli tonnin seteli...
 tonnin_seteli.use_time = -1
 tonnin_seteli.active = False
-tonnin_seteli.itemid = 12
 #Does absolutely nothing, reference to 'Kummeli'
 
 warhead = Item("Unstable Nuclear Warhead")
@@ -230,7 +218,6 @@ warhead.rarity = "Erittäin Harvinainen"
 warhead.price = free  # it's free!
 warhead.use_time = -1
 warhead.active = False
-warhead.itemid = 13
 #0.5% for game to end. Local threat stays at 0, global threat grows by -5%
 #Alternatively: On start of a turn, theres ~1-5% to print= "The nuclear warhead is shaking!"
 #Then game throws a d20= if 2-20 = print "Nothing happened...", if 1 = "Game over"
@@ -240,3 +227,4 @@ warhead.itemid = 13
 #these are the lists of items that the game uses
 shop_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, s_rabbit_paw, janitor, energydrink, tonnin_seteli, bulletvest]
 qawason_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, s_rabbit_paw, energydrink, bulletvest, flightmaster, warhead]
+all_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, energydrink, snow_globe, arcade_ticket, s_rabbit_paw, janitor, flightmaster, bulletvest, tonnin_seteli, warhead]
