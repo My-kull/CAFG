@@ -168,7 +168,9 @@ flightmaster.active = False
 
 
 bulletvest = Item("Bulletproof Vest")
-bulletvest.desc = ""
+bulletvest.desc = ("Allows you to take more hits.\n"
+                   "\n"
+                   "(saves your life in some cases)")
 bulletvest.buy = (f"The cashier gives you bombastic side eye and is probably thinking:\n"
                   f"'What'd you need that for?' You respond by giving the cashier back the bombastic side eye\n"
                   f"for selling such things in the first place.")
