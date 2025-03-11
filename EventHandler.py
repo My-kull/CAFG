@@ -84,17 +84,27 @@ def eventhandlersub(event_luck):
             return
         case 5:
             event=random.randint(0 ,2)
+            #prints special event start bar
             print("___________________________________________________________________________")
             print(used_events[int(event)].desc)
             match used_events[int(event)]:
 
-                case CAFG_events.fox_fires: # gives player luck between 50 and 100
-                    print("Their beaty has captured the attention of everyone.")
+                #gives player luck between 50 and 100
+                case CAFG_events.fox_fires:
+                    print("Their beaty has captured the attention of everyone.\n"
+                          "People are distracted and you feel more lucky.")
                     addluck = random.randint(50,100)
                     print(f"You gained +{addluck} luck!")
                     player_luck += addluck
 
-                case CAFG_events.national_hero: #
+                #Adds a random item from the qwawason_items to player_items.
+                case CAFG_events.space_express:
+                    qawason_random_item = random.randint(0, len(qawason_items)-1)
+                    print(f"You got one {qawason_items[int(qawason_random_item)].name}!")
+                    players_items.append(qawason_items[int(qawason_random_item)])
+
+                #If player succeeds, resets local threat. If player fails, game ends.(Unless player has bulletproof vest)
+                case CAFG_events.national_hero:  #
                     print("Quickly! De-escalate the sitsuation!")
                     active = True
                     tries = 3
@@ -108,22 +118,25 @@ def eventhandlersub(event_luck):
                         if not choise.isdigit():
                             print("Wrong input!")
                         elif int(choise) == random_correct:
-                            print("You managed to de-escalate the sitsuation! You are seen as a hero!\n"
+                            print("You managed to de-escalate the sitsuation! The locals see you as a hero!\n"
                                   "(Local threat set to 0)")
                             local_threat[current_country] = 0
-                            active= False
+                            active = False
                         else:
-                            tries -=1
+                            tries -= 1
+                            print(f"Wrong choise! Try again! {tries} tries remaining!")
                             if tries <= 0:
                                 print()
-                                print("Your 'negotiations' failed and the terrororists got you.")
-                                deathhandler()
-                            print(f"Wrong choise! Try again! {tries} tries remaining!")
-
-                case CAFG_events.space_express: # Adds a random item from the qwawason_items to player_items.
-                    qawason_random_item = random.randint(0, len(qawason_items)-1)
-                    print(f"You got one {qawason_items[int(qawason_random_item)].name}!")
-                    players_items.append(qawason_items[int(qawason_random_item)])
+                                if CAFG_items.bulletvest in players_items:
+                                    print("The terrorists opened fire but your bulletproof vest saved you.\n"
+                                          "The terrorists left the airport.\n")
+                                    players_items.pop(players_items.index(CAFG_items.bulletvest))
+                                    active = False
+                                else:
+                                    print("Your 'negotiations' failed and the terrororists got you.")
+                                    deathhandler()
+                    return
+            #prints special event end bar.
             print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
             return
 
@@ -138,6 +151,7 @@ def actionhandler():
     while doingactions:
         doingactions = actionhandlersub(input("Input command (? for a list of commands): "))
 
+#Receives player action commands and calls further functions to execute rest of the action.
 def actionhandlersub(command):
     print()
     match command:
@@ -167,18 +181,10 @@ def actionhandlersub(command):
                 return False
             else:
                 return True
-        #made these two as a debugging tool, can possibly be left in the game?
+
+        #debug stats tool
         case "stats":
             checkstats()
-            return True
-        case "localT":
-            print(local_threat)
-            return True
-        case "globalT":
-            print(global_threat)
-            return True
-        case "time":
-            print(time_units)
             return True
         case _:
             print("Unknown command (? for a list of commands)")
@@ -224,6 +230,7 @@ def actionuse():
             item_number += 1
         print()
 
+        #checks if sent item number matches one from player_items
         continue_using = True
         while continue_using:
             item_to_use = input("What item do you want to use (Type number or N to go back): ")
@@ -249,9 +256,11 @@ def actionusesub(used_item):
     else:
         print("Item is passive.")
     print()
-    # Checks what the used item is and acts accordingly.
+
+    #Checks what the used item is and acts accordingly.
     match use_item:
 
+        #uses the fake lottery coupon
         case CAFG_items.lottery_fake:
             money = random.randint(1000, 3000)
             local_threat[current_country] += 3000 - (player_luck // 100)
@@ -259,6 +268,7 @@ def actionusesub(used_item):
             player_money += money
             return
 
+        #uses lottery coupon
         case CAFG_items.lottery_coupon:
             lottery = random.randint(0, 10000) + (player_luck // 100)
             if lottery <= 5000:
@@ -281,11 +291,13 @@ def actionusesub(used_item):
             player_money += money
             return
 
+        #uses the invisibility cape
         case CAFG_items.invis_cape:
             local_threat[current_country] = local_threat[current_country] // 2
             print("The cape made you harder to track! (Decreased local threat by 50%)")
             return
 
+        #uses the fortune cookie
         case CAFG_items.luck_cookie:
             chance = random.randint(1, 6)
             if chance == 1:
@@ -297,6 +309,7 @@ def actionusesub(used_item):
             print(f"You read the fortune from the cookie and got {luck} luck!")
             return
 
+        #uses the Ebin-Sip -energy drink
         case CAFG_items.energydrink:
             addtime = 4
             time_units += addtime
@@ -305,6 +318,7 @@ def actionusesub(used_item):
                   f"(Gained {addtime} time units)")
             return
 
+        #ponders the used 1k bill.
         case CAFG_items.tonnin_seteli:
             print(f"You ponder at the purchase. It cost you 1000€...\n"
                 f"You've forgotten what the price was suppose to even be, why didn't the cashier give back any change?\n"
@@ -313,11 +327,13 @@ def actionusesub(used_item):
                 f"You don't even feel like eating this...")
             return
 
+        #uses the arcade ticket and gives score
         case CAFG_items.arcade_ticket:
             print(f"You visit a local arcade to play some games and have some fun! Yippee!")
             current_score += 100
             return
 
+        #uses the snow globe and gives score
         case CAFG_items.snow_globe:
             print(f"You shake the snowglobe and watch the artificial snowflakes fall...\n"
                   f"...\n"
@@ -339,12 +355,15 @@ def actionbuy():
             continue_using = False
             continue
         item_number = 0
+
+        #prints shop items
         for item in shop_items:
             print(f"{item_number + 1} {item.name}: {item.price}€")
             list_of_item_names.append(item.name)
             item_number+=1
         print()
 
+        #checks for valid input
         shop_item_number = input("What item do you want to buy (N to go back): ")
         if shop_item_number == "N":
             continue_using = False
@@ -358,6 +377,8 @@ def actionbuy():
             if shop_items[int(shop_item_number) - 1].price > player_money:
                 print("The item is too expensive")
                 print()
+
+            #buys the item and places it in player_items while also removing it from the shop
             else:
                 bought_item = shop_items[int(shop_item_number) - 1]
                 if bought_item == CAFG_items.tonnin_seteli:
@@ -378,7 +399,7 @@ def actioncheck():
     if len(players_items) == 0:
         print("You have no items. Go buy some")
     else:
-
+        #prints player_items
         print("Your items:")
         print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
         for item in players_items:
@@ -394,6 +415,8 @@ def actionwork():
     print("'rob' to rob a random person.")
     print()
     job_to_do = input("What work do you want to do (N to go back): ")
+
+    #check valid input
     if job_to_do == "N":
         return
     else:
@@ -403,11 +426,15 @@ def actionwork():
 def actionworksub(used_job):
     global player_money
     match used_job:
+
+        #clean airport job
         case "clean":
             stopwork = False
             while not stopwork:
                 worktime = input("How long do you want to work for?(N to go back): ")
                 print()
+
+                #checks for valid input
                 if worktime == "N":
                     print("You've decided you didn't want to clean the airport.")
                     stopwork = True
@@ -431,6 +458,8 @@ def actionworksub(used_job):
                 print()
                 timehandler(int(worktime),-5) #Uses worktime amount of time_units and decreases the local threat by -5 per spent unit.
             return
+
+        #ROBS AN MF
         case "rob":
             robbed=random.randint(1+player_luck,200+player_luck)
             print(f"You robbed an random civilian for {robbed}€!")
@@ -438,6 +467,7 @@ def actionworksub(used_job):
             # threat increases by 10 for every € stolen, player luck decreases this
             localthreathandler(1,robbed*(10-(int(player_luck/10))))
             return
+
         case _:
             print("Unknown job")
             return
@@ -445,6 +475,7 @@ def actionworksub(used_job):
 #checks for passive and active item effects at the start of the turn
 def itemchecker():
     # !!!!!!!!!!!!PLACEHOLDER!!!!!!!!!!!!
+    global local_threat, global_threat
     print("checking player items")
     return
 
