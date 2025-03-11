@@ -16,7 +16,7 @@ player_luck = 0
 players_items = []
 previous_travel_distance = 0
 current_country = "France" #change this to the starting country
-#part of the movementhandler placeholder
+#VV part of the movementhandler placeholder VV
 global_country_index = 0
 
 #handlers that perform the basic functions
@@ -26,6 +26,8 @@ def turnhandler():
     while True:
         global current_score
         current_score += 100
+        if global_threat == 100000:
+            deathhandler()
         timeunitrefresher(10)
         itemchecker()
         shoprandomiser(3)
@@ -80,9 +82,11 @@ def eventhandlersub(event_luck):
         case 3:
             print("You spontaneously grew a moustache. You feel strangely at peace with the universe.")
             time_units += 2
+            return
         case 4:
             print("It's the anniversary of the airport! People are celebrating without a care in the world.")
             local_threat[current_country] -= 5 #drops local_threat by 5 units
+            return
         case 5:
             event=random.randint(0 ,2)
             print("___________________________________________________________________________")
@@ -126,7 +130,7 @@ def eventhandlersub(event_luck):
                     print(f"You got one {qawason_items[int(qawason_random_item)].name}!")
                     players_items.append(qawason_items[int(qawason_random_item)])
             print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
-
+            return
 
         case _:
             print("It's a very boring airport! One star out of five!")
