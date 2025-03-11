@@ -205,13 +205,13 @@ tonnin_seteli.active = False
 
 warhead = Item("Unstable Nuclear Warhead")
 warhead.desc = ("A Nuclear Warhead. Obviously no one wants to arrest a man with an armed bomb.\n"
-                "Due to its unstable nature however, there is a 0.5% chance it will detonate.\n"
+                "Due to its unstable nature however, there is a small chance it will detonate.\n"
                 "\n"
                 "\x1b[3mOh and by the way, don't ask how you are allowed onto ANY planes with THIS...\x1b[0m\n"
                 "\n"
                 "- Local threat stays at 0"
                 "- -5% global threat"
-                "- 0.5% chance for the game to end on each turn.")
+                "- every turn, 5% chance to roll a D20. If it lands on 1 the warhead detonates ending the game.")
 warhead.buy = "You can't believe you got this for free, it feels too good to be true."
 warhead.rarity = "Erittäin Harvinainen"
 warhead.price = free  # it's free!
