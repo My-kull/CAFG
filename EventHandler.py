@@ -503,21 +503,21 @@ def actionworksub(used_job):
 #checks for passive and active item effects at the start of the turn
 def itemchecker():
     # !!!!!!!!!!!!PLACEHOLDER!!!!!!!!!!!!
-    global local_threat, global_threat
+    global local_threat, global_threat, player_luck
     print("checking player items")
 
     #checks if player has a nuclear warhead.
     if CAFG_items.warhead in players_items:
         stabilitycheck = random.randint(0, 10)
-        if stabilitycheck <= 5:
+        if stabilitycheck <= 1:
             print()
-            print("The nuclear warhead became less stable! you can hear it ticking!")
+            print("The nuclear warhead has become less stable! you can hear it ticking!")
             time.sleep(1.5)
-            print("\x1b[3mtick tock\x1b[0m")
+            print("\x1b[3mTick tock.\x1b[0m")
             time.sleep(1.5)
-            print("\x1b[3mtick tock\x1b[0m")
+            print("\x1b[3mTick tock.\x1b[0m")
             time.sleep(1.5)
-            print("\x1b[3mtick tock\x1b[0m")
+            print("\x1b[3mTick tock.\x1b[0m")
             time.sleep(1.5)
             blowup = random.randint(1, 20)
             if blowup == 1:
@@ -528,6 +528,10 @@ def itemchecker():
                 print("The warhead falls silent again...")
         local_threat[current_country] = 0
         global_threat -= int(global_threat*0.05)
+    if CAFG_items.s_rabbit_paw in players_items:
+        luck = random.randint(0, 15)
+        print(f"The rabbit's paw gives you +{luck} luck!")
+        player_luck += luck
     print()
     return
 
