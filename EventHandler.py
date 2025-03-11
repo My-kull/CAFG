@@ -7,7 +7,7 @@ from CAFG_items import qawason_items
 #system global variables
 current_score = 0
 global_threat = 0
-local_threat = {}
+local_threat = {"France": 0}
 shop_items = []
 #player global variables
 time_units = 10
@@ -23,28 +23,23 @@ global_country_index = 0
 
 #handles the holistic airport visits
 def turnhandler():
+    global current_score
     while True:
-        global current_score
-        current_score += 100
-        if global_threat == 100000:
-            deathhandler()
         timeunitrefresher(10)
         itemchecker()
-        shoprandomiser(3)
         globalthreathandler()
-        localthreathandler(0,0) #increases local threat using time units
+        current_score += 100
+        if global_threat == 50000:
+            deathhandler()
+        shoprandomiser(3)
         timehandler(0,0)
         eventhandler(player_luck)
         actionhandler()
         movementhandler()
 
 def globalthreathandler():
-    #handles global_threat
-    global current_country
-    #!!!!!PLACEHOLDER!!!!!
-    #!!!!!UPDATE THIS WITH THE country.name FROM THE DATABASE USING THE PATH airport.iso_country = country.iso_country!!!!!
     global global_threat
-    global_threat += previous_travel_distance * 1 #formula for increasing global threat
+    global_threat += previous_travel_distance + (local_threat[current_country] // 2) #formula for increasing global threat
     return
 
 def localthreathandler(timespent,threat):
@@ -256,6 +251,7 @@ def actionusesub(used_item):
     print()
     # Checks what the used item is and acts accordingly.
     match use_item:
+
         case CAFG_items.lottery_fake:
             money = random.randint(1000, 3000)
             local_threat[current_country] += 3000 - (player_luck // 100)
@@ -334,10 +330,10 @@ def actionbuy():
     global player_money, shop_items
     print(f"Your balance: {player_money}")
     print()
-    list_of_item_names = []
 
     continue_using = True
     while continue_using:
+        list_of_item_names = []
         if len(shop_items) == 0:
             print("You bought all the items. You lament that your shopping time has ended.")
             continue_using = False
@@ -354,9 +350,11 @@ def actionbuy():
             continue_using = False
         elif not shop_item_number.isdigit():
             print("Wrong input")
-        elif 0 > int(shop_item_number) or len(list_of_item_names) <= int(shop_item_number):
+        elif (0 >= int(shop_item_number)) or (len(list_of_item_names) < int(shop_item_number)):
+            print(shop_item_number)
             print("Wrong input")
         else:
+            print(shop_item_number)
             if shop_items[int(shop_item_number) - 1].price > player_money:
                 print("The item is too expensive")
                 print()
@@ -477,10 +475,7 @@ def movementhandler():
         choiceleaveorstay = input("Do you want to stay in the country or leave the country?(leave/stay): ")
         if choiceleaveorstay == "leave" or choiceleaveorstay == "stay":
             break
-    global current_score
-    global previous_travel_distance
-    global global_country_index
-    global current_country
+    global current_score, previous_travel_distance, global_country_index, current_country
     list_of_countries = ["France", "Russia", "USA", "China",
                          "Japan", "Germany", "UK", "Australia",
                          "India", "Canada", "Spain", "Italy",
@@ -495,6 +490,9 @@ def movementhandler():
         else:
             global_country_index = 0
             current_country = list_of_countries[global_country_index]
+
+        if current_country not in local_threat.keys():
+            local_threat[current_country] = 0
     elif choiceleaveorstay == "leave":
         print("Moving to the next airport within the country")
         current_score += 100
@@ -504,9 +502,11 @@ def movementhandler():
 
 #you are dead
 def deathhandler():
+    global current_score
     print()
     print("You are dead")
     print()
+    current_score += player_money // 4
     print(f"Your final score is {current_score}")
     quit()
 
