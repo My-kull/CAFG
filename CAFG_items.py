@@ -97,7 +97,7 @@ energydrink.desc= (f"EbinSip the iconic energy drink.\n"
                    f"\n"
                    f"When consumed:\n"
                    f"- +4 time units")
-energydrink.buy = "Ebin :DD."
+energydrink.buy = "Ebin :DD"
 energydrink.rarity = "Semi harvinainen"
 energydrink.price = average
 energydrink.use_time = 1
