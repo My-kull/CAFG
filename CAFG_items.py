@@ -236,4 +236,4 @@ kerosene.active = True
 #these are the lists of items that the game uses
 shop_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, s_rabbit_paw, janitor, energydrink, tonnin_seteli, bulletvest]
 qawason_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, s_rabbit_paw, energydrink, bulletvest, flightmaster, warhead]
-all_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, energydrink, snow_globe, arcade_ticket, s_rabbit_paw, janitor, flightmaster, bulletvest, tonnin_seteli, warhead]
+all_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, energydrink, snow_globe, arcade_ticket, s_rabbit_paw, janitor, flightmaster, bulletvest, tonnin_seteli, warhead, kerosene]
