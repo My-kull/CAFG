@@ -157,7 +157,7 @@ flightmaster.desc = ("Allows you to disguise your self as a flight master\n"
                      "and earn money while flying. Due to you not knowing how to fly however,\n"
                      "there is a slight chance you'll fall out of the sky.\n"
                      "\n"
-                     "+ 100€ from the next flight\n"
+                     "+ 200€ from the next flight\n"
                      "- 0.1% chance to die on the next flight.%")
 flightmaster.buy = ""
 flightmaster.rarity = "Harvinainen"
