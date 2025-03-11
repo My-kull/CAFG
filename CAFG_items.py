@@ -177,7 +177,7 @@ bulletvest.buy = (f"The cashier gives you bombastic side eye and is probably thi
 bulletvest.rarity = "Harvinainen"
 bulletvest.price = expensive
 bulletvest.use_time = 1
-bulletvest.active = True
+bulletvest.active = False
 #gives the player +50 health(once that is added)
 
 
