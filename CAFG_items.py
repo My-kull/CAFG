@@ -211,7 +211,7 @@ warhead.active = False
 #Then game throws a d20= if 2-20 = print "Nothing happened...", if 1 = "Game over"
 
 shop_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, s_rabbit_paw, janitor, energydrink, tonnin_seteli]
-
+qawason_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, s_rabbit_paw, energydrink, bulletvest, flightmaster, warhead]
 #for i in shop_items:
 #   print(f"{i.name:<30} --- {i.price:>10}")
 
