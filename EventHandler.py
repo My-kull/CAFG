@@ -264,8 +264,9 @@ def actionuse():
             if item_to_use == "N":
                 continue_using = False
             elif not item_to_use.isdigit():
-                print()
                 print("Wrong input!")
+            elif int(item_to_use) > len(players_items) or int(item_to_use) <= 0:
+                print("Invalid number!")
             else:
                 actionusesub(item_to_use)
 
