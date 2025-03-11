@@ -181,7 +181,7 @@ bulletvest.active = False
 #gives the player +50 health(once that is added)
 
 
-tonnin_seteli = Item("Kahvi + keksi")
+tonnin_seteli = Item("A coffee and a cookie")
 tonnin_seteli.desc = ("Wasn't this suppose to cost just 2€?\n"
                       "That was 1k € you gave, right? There is no way it wasn't 1k €...\n"
                       "But where's the change then? They couldn't possibly miss-calculate it, right?\n"
