@@ -23,3 +23,5 @@ space_express = Event("Space Express")
 space_express.desc = ""
 space_express.rarity = "Harvinainen"
 space_express.location = "everywhere"
+
+used_events=[national_hero, space_express, fox_fires]
