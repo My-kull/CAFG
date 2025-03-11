@@ -1,3 +1,5 @@
+import time
+
 import CAFG_items
 import random
 import CAFG_events
@@ -182,10 +184,15 @@ def actionhandlersub(command):
             else:
                 return True
 
-        #debug stats tool
+        #debug tools
         case "stats":
             checkstats()
             return True
+        case "giveitem":
+            giveitem()
+            return True
+
+        #incorrect input
         case _:
             print("Unknown command (? for a list of commands)")
             return True
@@ -201,6 +208,26 @@ def listcommands():
     print(f"{'leave' :<10} ---  go to the next airport")
     print(f"{'?' :<10} ---  check your commands")
     print()
+
+#DEV TOOL! Gives player an item corresponding to itemid
+def giveitem():
+    giveitem = True
+    print(f"There are {len(CAFG_items.all_items)} items in the game.")
+    while giveitem:
+        itemid = input("Enter itemid(N to stop): ")
+        if itemid == "N":
+            print()
+            giveitem = False
+        elif not itemid.isdigit():
+            print("Incorrect input")
+            print()
+        elif int(itemid) > len(CAFG_items.all_items):
+            print("Invalid ID.")
+            print()
+        else:
+            print(f"{CAFG_items.all_items[int(itemid)-1].name} added to player_items.")
+            players_items.append(CAFG_items.all_items[int(itemid)-1])
+            giveitem = False
 
 #prints player and game stats
 def checkstats():
@@ -477,6 +504,30 @@ def itemchecker():
     # !!!!!!!!!!!!PLACEHOLDER!!!!!!!!!!!!
     global local_threat, global_threat
     print("checking player items")
+
+    #checks if player has a nuclear warhead.
+    if CAFG_items.warhead in players_items:
+        stabilitycheck = random.randint(0, 10)
+        if stabilitycheck <= 5:
+            print()
+            print("The nuclear warhead became less stable! you can hear it ticking!")
+            time.sleep(1.5)
+            print("\x1b[3mtick tock\x1b[0m")
+            time.sleep(1.5)
+            print("\x1b[3mtick tock\x1b[0m")
+            time.sleep(1.5)
+            print("\x1b[3mtick tock\x1b[0m")
+            time.sleep(1.5)
+            blowup = random.randint(1, 20)
+            if blowup == 1:
+                print()
+                print("The warhead detonates, evaporating you in the blast.")
+                deathhandler()
+            else:
+                print("The warhead falls silent again...")
+        local_threat[current_country] = 0
+        global_threat -= int(global_threat*0.05)
+    print()
     return
 
 #randomises shop at start of the turn
