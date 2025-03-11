@@ -349,10 +349,10 @@ def actionbuy():
         if shop_item_number == "N":
             continue_using = False
         elif not shop_item_number.isdigit():
-            print("Wrong input 01")
+            print("Wrong input")
         elif (0 >= int(shop_item_number)) or (len(list_of_item_names) < int(shop_item_number)):
             print(shop_item_number)
-            print("Wrong input 02")
+            print("Wrong input")
         else:
             print(shop_item_number)
             if shop_items[int(shop_item_number) - 1].price > player_money:
