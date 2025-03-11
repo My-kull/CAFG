@@ -1,6 +1,8 @@
 import CAFG_items
 import random
-
+import CAFG_events
+from CAFG_events import used_events
+from CAFG_items import qawason_items
 
 #system global variables
 current_score = 0
@@ -64,11 +66,11 @@ def eventhandler(luck):
     eventhandlersub(event_luck)
 
 def eventhandlersub(event_luck):
-    event_happening = random.randint(0,4)
+    global time_units, player_money, local_threat, player_luck
+    event_happening = random.randint(0,5)
     match event_happening:
         case 1:
             print("You gained your yearly tax returns... again?... YIPPII")
-            global player_money
             player_money += 200
             return
         case 2:
@@ -77,12 +79,56 @@ def eventhandlersub(event_luck):
             return
         case 3:
             print("You spontaneously grew a moustache. You feel strangely at peace with the universe.")
-            global time_units
             time_units += 2
         case 4:
             print("It's the anniversary of the airport! People are celebrating without a care in the world.")
-            global local_threat
-            local_threat.update({current_country: local_threat.get(current_country)-5}) #drops local_threat by 5 units
+            local_threat[current_country] -= 5 #drops local_threat by 5 units
+            #local_threat.update({current_country: local_threat.get(current_country)-5})
+        case 5:
+            event=random.randint(0 ,2)
+            print("___________________________________________________________________________")
+            print(used_events[int(event)].desc)
+            match used_events[int(event)]:
+
+                case CAFG_events.fox_fires: # gives player luck between 50 and 100
+                    print("Their beaty has captured the attention of everyone.")
+                    addluck = random.randint(50,100)
+                    print(f"You gained +{addluck} luck!")
+                    player_luck += addluck
+
+                case CAFG_events.national_hero: #
+                    print("Quickly! De-escalate the sitsuation!")
+                    active = True
+                    tries = 3
+                    random_correct = random.randint(1, 4)
+                    while active:
+                        print("1 : Negotiate peacefully.\n"
+                              "2 : Give them a cookie, maybe they are just hungry. \n"
+                              "3 : Go in guns blazing.\n"
+                              "4 : Lie to them.")
+                        choise = input("Choose what to do:")
+                        if not choise.isdigit():
+                            print("Wrong input!")
+                        elif int(choise) == random_correct:
+                            print("You managed to de-escalate the sitsuation! You are seen as a hero!\n"
+                                  "(Local threat set to 0)")
+                            local_threat[current_country] = 0
+                            active= False
+                        else:
+                            tries -=1
+                            if tries <= 0:
+                                print()
+                                print("Your 'negotiations' failed and the terrororists got you.")
+                                deathhandler()
+                            print(f"Wrong choise! Try again! {tries} tries remaining!")
+
+                case CAFG_events.space_express: # Adds a random item from the qwawason_items to player_items.
+                    qawason_random_item = random.randint(0, len(qawason_items))
+                    print(f"You got {qawason_items[int(qawason_random_item)]}!")
+                    players_items.append(qawason_items[int(qawason_random_item)])
+            print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+
+
         case _:
             print("It's a very boring airport! One star out of five!")
             return
@@ -196,6 +242,7 @@ def actionusesub(used_item):
     use_item = players_items[int(used_item) - 1]
     print(f"You've decided to use {use_item.name}")
     global time_units, player_money, current_score, local_threat, player_luck
+    # checks if item is the active kind. If so, uses it.
     if players_items[int(used_item) - 1].active:
         players_items.pop(int(used_item) - 1)
         print("Item used.")
@@ -204,6 +251,7 @@ def actionusesub(used_item):
     else:
         print("Item is passive.")
     print()
+    # Checks what the used item is and acts accordingly.
     match use_item:
         case CAFG_items.lottery_fake:
             money = random.randint(1000, 3000)
