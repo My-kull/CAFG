@@ -48,6 +48,7 @@ invis_cape.use_time = 1
 invis_cape.active = True
 #[local threat]/2 when used
 
+
 lottery_fake = Item("Falsified Lottery Coupon")
 lottery_fake.desc = ("With your skills- I mean luck, you modify-\n"
                 "*ahem* you SOMEHOW manage to get a lottery coupon with the winning numbers!\n"
@@ -60,6 +61,7 @@ lottery_fake.price = expensive
 lottery_fake.use_time = 1
 lottery_fake.type = True
 #Gives 1000-3000€, threat up by 5 000 no matter the outcome.
+
 
 lottery_coupon = Item("Legit Lottery Coupon")
 lottery_coupon.desc = (f"An actually legit 100% real lottery coupon that's not gonna get you in trouble!\n"
@@ -77,6 +79,7 @@ lottery_coupon.active = True
 #50% chance to get nothing, 20% for 10-50€, 10% for 50-100€, 10% for 100-500€
 # 5% for 500€-700€, 3% for 700€-1000, 1.99% for 1000-2000€, 0.01% 10 000€
 
+
 luck_cookie = Item("Fortune Cookie")
 luck_cookie.desc = ("A traditional chinese cookie that tells your fortune!\n"
                     "\n"
@@ -88,6 +91,7 @@ luck_cookie.use_time = 1
 luck_cookie.active = True
 #Increases luck, possibly add a small chance to decrease it instead?
 
+
 energydrink = Item("ES :DDD")
 energydrink.desc= (f"An iconic energy drink.\n"
                    f"\n"
@@ -98,7 +102,8 @@ energydrink.rarity = "Semi harvinainen"
 energydrink.price = average
 energydrink.use_time = 1
 energydrink.active = True
-#pärisee :D
+#pärisemää :D
+
 
 snow_globe = Item("Snow globe")
 snow_globe.desc = ("A Snow globe suvenier.\n"
@@ -110,7 +115,7 @@ snow_globe.rarity = "Harvinainen"
 snow_globe.price = average
 snow_globe.use_time = -1
 snow_globe.active = False
-
+#score
 
 arcade_ticket = Item("Arcade ticket")
 arcade_ticket.desc = ("A ticket to the arcade where you can play games and have fun!\n"
@@ -121,6 +126,7 @@ arcade_ticket.rarity = "Semi harvinainen"
 arcade_ticket.price = very_cheap
 arcade_ticket.use_time = 1
 arcade_ticket.active = True
+#scoreeeeeeeeeee
 
 s_rabbit_paw = Item("Space-rabbit Foot")
 s_rabbit_paw.desc = ("Straight from the vast prairies of space.\n"
@@ -133,6 +139,7 @@ s_rabbit_paw.use_time = -1
 s_rabbit_paw.active = False
 #Adds a certain % buff to luck.
 
+
 janitor = Item("Janitors Clothes")
 janitor.desc = ("Allows you to disguise yourself as a janitor and work for some money.\n"
                 "\n"
@@ -144,7 +151,7 @@ janitor.use_time = -1
 janitor.active = False
 #Under "Work", gives like 20€
 
-#below this, items are not used
+
 flightmaster = Item("Flight-masters Clothes")
 flightmaster.desc = ("Allows you to disguise your self as a flight master\n"
                      "and earn money while flying. Due to you not knowing how to fly however,\n"
@@ -159,6 +166,7 @@ flightmaster.use_time = -1
 flightmaster.active = False
 #Under "Work", gives like 100€
 
+
 bulletvest = Item("Bulletproof Vest")
 bulletvest.desc = ""
 bulletvest.buy = (f"The cashier gives you bombastic side eye and is probably thinking:\n"
@@ -169,6 +177,7 @@ bulletvest.price = expensive
 bulletvest.use_time = 1
 bulletvest.active = True
 #gives the player +50 health(once that is added)
+
 
 tonnin_seteli = Item("Kahvi + keksi")
 tonnin_seteli.desc = ("Wasn't this suppose to cost just 2€?\n"
@@ -210,10 +219,8 @@ warhead.active = False
 #Alternatively: On start of a turn, theres ~1-5% to print= "The nuclear warhead is shaking!"
 #Then game throws a d20= if 2-20 = print "Nothing happened...", if 1 = "Game over"
 
+
+
+#these are the lists of items that the game uses
 shop_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, s_rabbit_paw, janitor, energydrink, tonnin_seteli]
 qawason_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, s_rabbit_paw, energydrink, bulletvest, flightmaster, warhead]
-#for i in shop_items:
-#   print(f"{i.name:<30} --- {i.price:>10}")
-
-#for i in shop_items:
-#    print(f"{i.name} \n {i.desc} \n -------------------------------------------------------------")
