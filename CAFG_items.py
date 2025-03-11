@@ -218,11 +218,20 @@ warhead.rarity = "Erittäin Harvinainen"
 warhead.price = free  # it's free!
 warhead.use_time = -1
 warhead.active = False
-#0.5% for game to end. Local threat stays at 0, global threat grows by -5%
-#Alternatively: On start of a turn, theres ~1-5% to print= "The nuclear warhead is shaking!"
+#Local threat stays at 0, global threat grows by -5%
+#On start of a turn, theres ~1-5% to print= "The nuclear warhead is shaking!"
 #Then game throws a d20= if 2-20 = print "Nothing happened...", if 1 = "Game over"
 
-
+kerosene = Item("Jetfuel")
+kerosene.desc = ("Can't melt steel beams.\n"
+                 "\n"
+                 "-doesn't do anything, yet\n"
+                 "no, you cannot drink it.")
+kerosene.buy = "KEROSENE!"
+kerosene.rarity = "Semi Harvinainen"
+kerosene.price = costly
+kerosene.use_time = 1
+kerosene.active = True
 
 #these are the lists of items that the game uses
 shop_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, s_rabbit_paw, janitor, energydrink, tonnin_seteli, bulletvest]
