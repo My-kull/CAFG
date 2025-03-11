@@ -493,7 +493,7 @@ def movementhandler():
 
         if current_country not in local_threat.keys():
             local_threat[current_country] = 0
-    elif choiceleaveorstay == "leave":
+    elif choiceleaveorstay == "stay":
         print("Moving to the next airport within the country")
         current_score += 100
         previous_travel_distance = 200
