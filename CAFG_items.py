@@ -88,18 +88,17 @@ luck_cookie.use_time = 1
 luck_cookie.active = True
 #Increases luck, possibly add a small chance to decrease it instead?
 
-pot_brownie = Item("A 'North-American' chocolate brownie")
-pot_brownie.desc= (f"A brownie with a distinct 'plant -like smell'. It tastes funny.\n"
+energydrink = Item("ES :DDD")
+energydrink.desc= (f"An iconic energy drink.\n"
                    f"\n"
                    f"When consumed:\n"
-                   f"- +3 time units"
-                   f"- local threat -1000")
-pot_brownie.buy = "This one has a special kind of kick to it."
-pot_brownie.rarity = "Semi harvinainen"
-pot_brownie.price = average
-pot_brownie.use_time = 1
-pot_brownie.active = True
-#get high as a kite maaan
+                   f"- +4 time units")
+energydrink.buy = "Ebin :DD."
+energydrink.rarity = "Semi harvinainen"
+energydrink.price = average
+energydrink.use_time = 1
+energydrink.active = True
+#pärisee :D
 
 snow_globe = Item("Snow globe")
 snow_globe.desc = ("A Snow globe suvenier.\n"
@@ -211,7 +210,7 @@ warhead.active = False
 #Alternatively: On start of a turn, theres ~1-5% to print= "The nuclear warhead is shaking!"
 #Then game throws a d20= if 2-20 = print "Nothing happened...", if 1 = "Game over"
 
-shop_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, s_rabbit_paw, janitor, pot_brownie, tonnin_seteli]
+shop_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, s_rabbit_paw, janitor, energydrink, tonnin_seteli]
 
 #for i in shop_items:
 #   print(f"{i.name:<30} --- {i.price:>10}")

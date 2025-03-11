@@ -250,11 +250,11 @@ def actionusesub(used_item):
             print(f"You read the fortune from the cookie and got {luck} luck!")
             return
 
-        case CAFG_items.pot_brownie:
+        case CAFG_items.energydrink:
             addtime = 4
             time_units += addtime
-            print(f"You eat the brownie...\n"
-                  f"You feel like theres no longer a rush to anywhere anymore...\n"
+            print(f"You chug the energy drink and feel energized.\n"
+                  f"\n"
                   f"(Gained {addtime} time units)")
             return
 
