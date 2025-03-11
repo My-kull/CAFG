@@ -93,7 +93,7 @@ luck_cookie.active = True
 
 
 energydrink = Item("ES :DDD")
-energydrink.desc= (f"An iconic energy drink.\n"
+energydrink.desc= (f"EbinSip the iconic energy drink.\n"
                    f"\n"
                    f"When consumed:\n"
                    f"- +4 time units")
