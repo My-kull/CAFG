@@ -102,10 +102,10 @@ def eventhandlersub(event_luck):
                     tries = 3
                     random_correct = random.randint(1, 4)
                     while active:
-                        print("1 : Negotiate peacefully.\n"
-                              "2 : Give them a cookie, maybe they are just hungry. \n"
-                              "3 : Go in guns blazing.\n"
-                              "4 : Lie to them.")
+                        print("1 : Negotiate peacefully so no one gets hurt.\n"
+                              "2 : Give them a cookie, maybe they are just hungry!\n"
+                              "3 : Go in guns blazing and shoot the bastards.\n"
+                              "4 : Lie to them. Straight up lie to them about everything.")
                         choise = input("Choose what to do:")
                         if not choise.isdigit():
                             print("Wrong input!")
@@ -124,7 +124,7 @@ def eventhandlersub(event_luck):
 
                 case CAFG_events.space_express: # Adds a random item from the qwawason_items to player_items.
                     qawason_random_item = random.randint(0, len(qawason_items))
-                    print(f"You got {qawason_items[int(qawason_random_item)]}!")
+                    print(f"You got one {qawason_items[int(qawason_random_item)].name}!")
                     players_items.append(qawason_items[int(qawason_random_item)])
             print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
 
