@@ -83,7 +83,6 @@ def eventhandlersub(event_luck):
         case 4:
             print("It's the anniversary of the airport! People are celebrating without a care in the world.")
             local_threat[current_country] -= 5 #drops local_threat by 5 units
-            #local_threat.update({current_country: local_threat.get(current_country)-5})
         case 5:
             event=random.randint(0 ,2)
             print("___________________________________________________________________________")
@@ -123,7 +122,7 @@ def eventhandlersub(event_luck):
                             print(f"Wrong choise! Try again! {tries} tries remaining!")
 
                 case CAFG_events.space_express: # Adds a random item from the qwawason_items to player_items.
-                    qawason_random_item = random.randint(0, len(qawason_items))
+                    qawason_random_item = random.randint(0, len(qawason_items)-1)
                     print(f"You got one {qawason_items[int(qawason_random_item)].name}!")
                     players_items.append(qawason_items[int(qawason_random_item)])
             print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
@@ -302,7 +301,7 @@ def actionusesub(used_item):
             addtime = 4
             time_units += addtime
             print(f"You chug the energy drink and feel energized.\n"
-                  f"\n"
+                  f"You feel like you could do a wheelie with any vehicle.\n"
                   f"(Gained {addtime} time units)")
             return
 
