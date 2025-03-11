@@ -522,7 +522,7 @@ def itemchecker():
             blowup = random.randint(1, 20)
             if blowup == 1:
                 print()
-                print("The warhead detonates, evaporating you in the blast.")
+                print("The warhead detonates, evaporating you and the current airport in the blast.")
                 deathhandler()
             else:
                 print("The warhead falls silent again...")
