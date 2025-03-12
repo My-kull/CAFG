@@ -12,12 +12,6 @@ try:
     )
     print("Connected successfully!")
 
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM airport")
-    result = cursor.fetchall()
-    for row in result:
-        print(row)
-    conn.close()
 except mysql.connector.Error as err:
     print(f"Error: {err}")
 
