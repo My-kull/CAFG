@@ -16,6 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+--Creating main user
+--
+
+CREATE USER IF NOT EXISTS 'surviver'@'localhost' IDENTIFIED BY '123';
+GRANT ALL PRIVILEGES ON flight_game.* TO 'surviver'@'localhost';
+FLUSH PRIVILEGES;
+
+--
 -- Table structure for table `airport`
 --
 
