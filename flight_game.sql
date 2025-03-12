@@ -111,8 +111,7 @@ DROP TABLE IF EXISTS `game`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `game` (
   `id` varchar(40) NOT NULL,
-  `co2_consumed` int(8) DEFAULT NULL,
-  `co2_budget` int(8) DEFAULT NULL,
+  `score` varchar(10) DEFAULT NULL,
   `location` varchar(10) DEFAULT NULL,
   `screen_name` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -120,75 +119,6 @@ CREATE TABLE `game` (
   CONSTRAINT `game_ibfk_1` FOREIGN KEY (`location`) REFERENCES `airport` (`ident`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `game`
---
-
-LOCK TABLES `game` WRITE;
-/*!40000 ALTER TABLE `game` DISABLE KEYS */;
-INSERT INTO `game` VALUES ('1',2000,10000,'EFHK','Heini'),('2',3000,10000,'EGCC','Vesa'),('3',8000,10000,'EGKK','Ilkka');
-/*!40000 ALTER TABLE `game` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `goal`
---
-
-DROP TABLE IF EXISTS `goal`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `goal` (
-  `id` int(11) NOT NULL,
-  `name` varchar(40) DEFAULT NULL,
-  `description` varchar(200) DEFAULT NULL,
-  `icon` varchar(8) DEFAULT NULL,
-  `target` varchar(40) DEFAULT NULL,
-  `target_minvalue` decimal(8,2) DEFAULT NULL,
-  `target_maxvalue` decimal(8,2) DEFAULT NULL,
-  `target_text` varchar(40) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `goal`
---
-
-LOCK TABLES `goal` WRITE;
-/*!40000 ALTER TABLE `goal` DISABLE KEYS */;
-INSERT INTO `goal` VALUES (1,'HOT','Temperature over +25C','01d','TEMP',25.00,9999.00,NULL),(2,'COLD','Temperature under -20C','13d','TEMP',-9999.00,-20.00,NULL),(3,'0DEG','Temperature exactly 0C','04d','TEMP',-0.50,0.50,NULL),(4,'10DEG','Temperature exactly +10C','04d','TEMP',9.50,10.50,NULL),(5,'20DEG','Temperature exactly +20C','04d','TEMP',19.50,20.50,NULL),(6,'CLEAR','Clear skies','01d','WEATHER',NULL,NULL,'Clear'),(7,'CLOUDS','Cloudy','04d','WEATHER',NULL,NULL,'Clouds'),(8,'WINDY','Wind blows more than 10 m/s','04d','WIND',10.00,9999.00,NULL);
-/*!40000 ALTER TABLE `goal` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `goal_reached`
---
-
-DROP TABLE IF EXISTS `goal_reached`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `goal_reached` (
-  `game_id` varchar(40) NOT NULL,
-  `goal_id` int(11) NOT NULL,
-  PRIMARY KEY (`game_id`,`goal_id`),
-  KEY `goalid` (`goal_id`),
-  CONSTRAINT `goal_reached_ibfk_1` FOREIGN KEY (`game_id`) REFERENCES `game` (`id`),
-  CONSTRAINT `goal_reached_ibfk_2` FOREIGN KEY (`goal_id`) REFERENCES `goal` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `goal_reached`
---
-
-LOCK TABLES `goal_reached` WRITE;
-/*!40000 ALTER TABLE `goal_reached` DISABLE KEYS */;
-INSERT INTO `goal_reached` VALUES ('1',4),('1',7),('2',4),('3',7);
-/*!40000 ALTER TABLE `goal_reached` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
@@ -196,7 +126,6 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
 
 DELETE FROM airport WHERE type <> 'large_airport';
 
