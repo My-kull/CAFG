@@ -579,6 +579,7 @@ def movementhandler():
     print(f"You have chosen to go to {chosen_airport[1]}")
 
     cursor.close()
+    conn.close()
 
     if choiceleaveorstay == "leave":
         print(r"""
