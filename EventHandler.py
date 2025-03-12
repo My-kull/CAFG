@@ -1,5 +1,3 @@
-import time
-
 import CAFG_variables as gv #Import Global Variables
 import CAFG_items
 import random
