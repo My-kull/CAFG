@@ -414,7 +414,7 @@ def actionworksub(used_job):
                   / \
                         """,
                           r"""
-        "WI WI WI UWAUWA"
+        "WI WI WI WI UWAUWA"
                 ₍^. .^₎
                🧹 /|
                   / \
