@@ -1,76 +1,60 @@
 import time
 
+import CAFG_variables as gv #Import Global Variables
 import CAFG_items
 import random
 import CAFG_events
 from CAFG_events import used_events
 from CAFG_items import qawason_items
+from CAFG_variables import local_threat
 
-#system global variables
-current_score = 0
-global_threat = 0
-local_threat = {"France": 0}
-shop_items = []
-#player global variables
-time_units = 10
-player_money = 1000
-player_luck = 0
-players_items = []
-previous_travel_distance = 0
-current_country = "France" #change this to the starting country
-#VV part of the movementhandler placeholder VV
-global_country_index = 0
 
 #handlers that perform the basic functions
 
 #handles the holistic airport visits
 def turnhandler():
-    global current_score
+    #global CAFG_variables
     while True:
         timeunitrefresher(10)
         itemchecker()
         globalthreathandler()
-        current_score += 100
-        if global_threat == 20000:
+        gv.current_score += 100
+        if gv.global_threat == 20000:
             deathhandler()
         shoprandomiser(3)
         timehandler(0,0)
-        eventhandler(player_luck)
+        eventhandler(gv.player_luck)
         actionhandler()
         movementhandler()
 
 def globalthreathandler():
-    global global_threat
-    global_threat += previous_travel_distance + (local_threat[current_country] // 2) #formula for increasing global threat
+    gv.global_threat += gv.previous_travel_distance + (gv.local_threat[gv.current_country] // 2) #formula for increasing global threat
     return
 
 def localthreathandler(timespent,threat):
-    global local_threat
-    if not local_threat.get(current_country): #Checks if country has an assigned local_threat in [dict] yet. If not, adds one.
-        if len(local_threat.keys())==0:
-            local_threat.update({current_country: 0})
-        local_threat.update({current_country: 0})
+    if not gv.local_threat.get(gv.current_country): #Checks if country has an assigned gv.local_threat in [dict] yet. If not, adds one.
+        if len(gv.local_threat.keys())==0:
+            gv.local_threat.update({gv.current_country: 0})
+        gv.local_threat.update({gv.current_country: 0})
 
-    local_threat.update({current_country: local_threat.get(current_country)+(threat*timespent)}) #Increase local_threat for current country.
+    gv.local_threat.update({gv.current_country: gv.local_threat.get(gv.current_country)+(threat*timespent)}) #Increase gv.local_threat for current country.
 
 def timehandler(timespent,threat):
-    global time_units
-    time_units -= timespent
+    gv.time_units -= timespent
     localthreathandler(timespent,threat)
 
 #handles the arrival events
 def eventhandler(luck):
     #vv THESE MULTIPLIERS ARE PLACEHOLDERS vv
-    event_luck = (local_threat.get(current_country) * 1) * (global_threat * 1) - (luck * 1)
+    event_luck = (gv.local_threat.get(gv.current_country) * 1) * (gv.global_threat * 1) - (luck * 1)
     eventhandlersub(event_luck)
 
 def eventhandlersub(event_luck):
-    global time_units, player_money, local_threat, player_luck
     event_happening = random.randint(0,5)
     match event_happening:
         case 1:
             print("You gained your yearly tax returns... again?... YIPPII")
-            player_money += 200
+            gv.player_money += 200
             return
         case 2:
             print("You found a bazaar in the basement of the airport! Time for a shopping spree!")
@@ -78,11 +62,11 @@ def eventhandlersub(event_luck):
             return
         case 3:
             print("You spontaneously grew a moustache. You feel strangely at peace with the universe.")
-            time_units += 2
+            gv.time_units += 2
             return
         case 4:
             print("It's the anniversary of the airport! People are celebrating without a care in the world.")
-            local_threat[current_country] -= 5 #drops local_threat by 5 units
+            gv.local_threat[gv.current_country] -= 5 #drops gv.local_threat by 5 units
             return
         case 5:
             event=random.randint(0 ,2)
@@ -97,13 +81,13 @@ def eventhandlersub(event_luck):
                           "People are distracted and you feel more lucky.")
                     addluck = random.randint(50,100)
                     print(f"You gained +{addluck} luck!")
-                    player_luck += addluck
+                    gv.player_luck += addluck
 
                 #Adds a random item from the qwawason_items to player_items.
                 case CAFG_events.space_express:
                     qawason_random_item = random.randint(0, len(qawason_items)-1)
                     print(f"You got one {qawason_items[int(qawason_random_item)].name}!")
-                    players_items.append(qawason_items[int(qawason_random_item)])
+                    gv.player_items.append(qawason_items[int(qawason_random_item)])
 
                 #If player succeeds, resets local threat. If player fails, game ends.(Unless player has bulletproof vest)
                 case CAFG_events.national_hero:  #
@@ -125,13 +109,13 @@ def eventhandlersub(event_luck):
 
                         #Checks if player chose violence and happens to have a gun and ammo.
                         elif int(choise) == 5:
-                            if CAFG_items.firearm in players_items and CAFG_items.gun_mag in players_items:
+                            if CAFG_items.firearm in gv.player_items and CAFG_items.gun_mag in gv.player_items:
                                 print("You load your gun and  the terrorists. The locals see you as a hero!\n"
                                       "(Local threaet set to 0)")
-                                players_items.pop(players_items.index(CAFG_items.gun_mag))
-                                local_threat[current_country] = 0
+                                gv.player_items.pop(gv.player_items.index(CAFG_items.gun_mag))
+                                gv.local_threat[gv.current_country] = 0
                                 active = False
-                            elif CAFG_items.firearm in players_items:
+                            elif CAFG_items.firearm in gv.player_items:
                                 print("You dont have ammo!")
                             else:
                                 print("You dont have a gun!")
@@ -150,17 +134,17 @@ def eventhandlersub(event_luck):
                                     print("You tell the terrorists that .")
                             print("You managed to de-escalate the sitsuation! The locals see you as a hero!\n"
                                   "(Local threat set to 0)")
-                            local_threat[current_country] = 0
+                            gv.local_threat[gv.current_country] = 0
                             active = False
                         else:
                             tries -= 1
                             print(f"Wrong choise! Try again! {tries} tries remaining!")
                             if tries <= 0:
                                 print()
-                                if CAFG_items.bulletvest in players_items:
+                                if CAFG_items.bulletvest in gv.player_items:
                                     print("The terrorists opened fire but your bulletproof vest saved you.\n"
                                           "The terrorists left the airport.\n")
-                                    players_items.pop(players_items.index(CAFG_items.bulletvest))
+                                    gv.player_items.pop(gv.player_items.index(CAFG_items.bulletvest))
                                     active = False
                                 else:
                                     print("Your 'negotiations' failed and the terrororists got you.")
@@ -257,16 +241,16 @@ def giveitem():
             print()
         else:
             print(f"{CAFG_items.all_items[int(itemid)-1].name} added to player_items.")
-            players_items.append(CAFG_items.all_items[int(itemid)-1])
+            gv.player_items.append(CAFG_items.all_items[int(itemid)-1])
             give_item = False
 
 #DEV TOOL! Removes an item from player inventory
 def takeitem():
-    if len(players_items) > 0:
+    if len(gv.player_items) > 0:
         print("Your items:")
         print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
-        #prints players_items
-        for i, item in enumerate(players_items):
+        #prints gv.player_items
+        for i, item in enumerate(gv.player_items):
             print(f"{i+1} {item.name}\n")
         print()
         take_item = True
@@ -278,41 +262,41 @@ def takeitem():
             elif not itemnum.isdigit():
                 print("Incorrect input.")
                 print()
-            elif 1 > int(itemnum) or int(itemnum) > len(players_items):
+            elif 1 > int(itemnum) or int(itemnum) > len(gv.player_items):
                 print("Invalid number")
                 print()
             else:
-                print(f"{players_items[int(itemnum)-1].name} removed from players_items.")
-                players_items.pop(int(itemnum)-1)
+                print(f"{gv.player_items[int(itemnum)-1].name} removed from gv.player_items.")
+                gv.player_items.pop(int(itemnum)-1)
                 take_item = False
     else:
-        print("players_items is empty.")
+        print("gv.player_items is empty.")
         print()
 
 
 #prints player and game stats
 def checkstats():
     print("Game status")
-    print(f"Score is {current_score}")
-    print(f"Global threat is {global_threat}")
-    print(f"Current country is {current_country}")
-    print(f"Local treat is {local_threat.get(current_country)}")
+    print(f"Score is {gv.current_score}")
+    print(f"Global threat is {gv.global_threat}")
+    print(f"Current country is {gv.current_country}")
+    print(f"Local treat is {gv.local_threat.get(gv.current_country)}")
     print()
 
     print("Your status")
-    print(f"Your balance: {player_money}€")
-    print(f"Your luck: {player_luck}")
-    print(f"The timeunits you have: {time_units}")
+    print(f"Your balance: {gv.player_money}€")
+    print(f"Your luck: {gv.player_luck}")
+    print(f"The timeunits you have: {gv.time_units}")
     print()
 
 #uses your items
 def actionuse():
-    if len(players_items) == 0:
+    if len(gv.player_items) == 0:
         print("You have no items. Go buy some")
     else:
         print("Your items:")
         print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
-        for i, item in enumerate(players_items):
+        for i, item in enumerate(gv.player_items):
             print(f"{i + 1} {item.name}\n")
         print()
 
@@ -324,22 +308,21 @@ def actionuse():
                 continue_using = False
             elif not item_to_use.isdigit():
                 print("Wrong input!")
-            elif int(item_to_use) > len(players_items) or int(item_to_use) <= 0:
+            elif int(item_to_use) > len(gv.player_items) or int(item_to_use) <= 0:
                 print("Invalid number!")
             else:
                 actionusesub(item_to_use)
 
 def actionusesub(used_item):
     # here the match case structure for item use
-    use_item = players_items[int(used_item) - 1]
+    use_item = gv.player_items[int(used_item) - 1]
     print(f"You've decided to use {use_item.name}")
-    global time_units, player_money, current_score, local_threat, player_luck
     # checks if item is the active kind. If so, uses it.
-    if players_items[int(used_item) - 1].active:
-        players_items.pop(int(used_item) - 1)
+    if gv.player_items[int(used_item) - 1].active:
+        gv.player_items.pop(int(used_item) - 1)
         print("Item used.")
-        current_score += 50
-        time_units -= 1
+        gv.current_score += 50
+        gv.time_units -= 1
     else:
         print("Item is passive.")
     print()
@@ -350,14 +333,14 @@ def actionusesub(used_item):
         #uses the fake lottery coupon
         case CAFG_items.lottery_fake:
             money = random.randint(1000, 3000)
-            local_threat[current_country] += 3000 - (player_luck // 100)
+            gv.local_threat[gv.current_country] += 3000 - (gv.player_luck // 100)
             print(f"You manage to get {money}€, but now you are in trouble!")
-            player_money += money
+            gv.player_money += money
             return
 
         #uses lottery coupon
         case CAFG_items.lottery_coupon:
-            lottery = random.randint(0, 10000) + (player_luck // 100)
+            lottery = random.randint(0, 10000) + (gv.player_luck // 100)
             if lottery <= 5000:
                 money = 0
             elif 5000 < lottery < 7000:
@@ -375,12 +358,12 @@ def actionusesub(used_item):
             else:
                 money = 10000
             print(f"Congratulations! You got {money}€ from the lottery!")
-            player_money += money
+            gv.player_money += money
             return
 
         #uses the invisibility cape
         case CAFG_items.invis_cape:
-            local_threat[current_country] = local_threat[current_country] // 2
+            gv.local_threat[gv.current_country] = gv.local_threat[gv.current_country] // 2
             print("The cape made you harder to track! (Decreased local threat by 50%)")
             return
 
@@ -388,10 +371,10 @@ def actionusesub(used_item):
         case CAFG_items.luck_cookie:
             chance = random.randint(1, 6)
             if chance == 1:
-                player_luck += 10
+                gv.player_luck += 10
                 luck = 10
             else:
-                player_luck -= 10
+                gv.player_luck -= 10
                 luck = -10
             print(f"You read the fortune from the cookie and got {luck} luck!")
             return
@@ -399,7 +382,7 @@ def actionusesub(used_item):
         #uses the Ebin-Sip -energy drink
         case CAFG_items.energydrink:
             addtime = 4
-            time_units += addtime
+            gv.time_units += addtime
             print(f"You chug the energy drink and feel energized.\n"
                   f"You feel like you could do a wheelie with any vehicle.\n"
                   f"(Gained {addtime} time units)")
@@ -417,7 +400,7 @@ def actionusesub(used_item):
         #uses the arcade ticket and gives score
         case CAFG_items.arcade_ticket:
             print(f"You visit a local arcade to play some games and have some fun! Yippee!")
-            current_score += 100
+            gv.current_score += 100
             return
 
         #uses the snow globe and gives score
@@ -425,25 +408,24 @@ def actionusesub(used_item):
             print(f"You shake the snowglobe and watch the artificial snowflakes fall...\n"
                   f"...\n"
                   f"What fun!!!")
-            current_score += 100
+            gv.current_score += 100
             return
 
 #buys more items
 def actionbuy():
-    global player_money, shop_items
-    print(f"Your balance: {player_money}")
+    print(f"Your balance: {gv.player_money}")
     print()
 
     continue_using = True
     while continue_using:
         list_of_item_names = []
-        if len(shop_items) == 0:
+        if len(gv.shop_items) == 0:
             print("You bought all the items. You lament that your shopping time has ended.")
             continue_using = False
             continue
 
         #prints shop items
-        for i, item in enumerate(shop_items):
+        for i, item in enumerate(gv.shop_items):
             print(f"{i + 1} {item.name}: {item.price}€")
             list_of_item_names.append(item.name)
         print()
@@ -459,35 +441,35 @@ def actionbuy():
             print("Wrong input")
         else:
             print(shop_item_number)
-            if shop_items[int(shop_item_number) - 1].price > player_money:
+            if gv.shop_items[int(shop_item_number) - 1].price > gv.player_money:
                 print("The item is too expensive")
                 print()
 
             #buys the item and places it in player_items while also removing it from the shop
             else:
-                bought_item = shop_items[int(shop_item_number) - 1]
+                bought_item = gv.shop_items[int(shop_item_number) - 1]
                 if bought_item == CAFG_items.tonnin_seteli:
-                    player_money -= 996
-                players_items.append(bought_item)
-                player_money -= shop_items[int(shop_item_number) - 1].price
-                timehandler(1,shop_items[int(shop_item_number) - 1].price) #uses 1 unit of time and increases local threat by 10 with said amount of time.
-                shop_items.pop(int(shop_item_number) - 1)
+                    gv.player_money -= 996
+                gv.player_items.append(bought_item)
+                gv.player_money -= gv.shop_items[int(shop_item_number) - 1].price
+                timehandler(1,gv.shop_items[int(shop_item_number) - 1].price) #uses 1 unit of time and increases local threat by 10 with said amount of time.
+                gv.shop_items.pop(int(shop_item_number) - 1)
                 print()
                 print(f"You bought {bought_item.name}")
                 print(bought_item.buy)
                 print()
-                print(f"Your balance: {player_money}")
+                print(f"Your balance: {gv.player_money}")
                 print()
 
 #checks your items
 def actioncheck():
-    if len(players_items) == 0:
+    if len(gv.player_items) == 0:
         print("You have no items. Go buy some")
     else:
         #prints player_items
         print("Your items:")
         print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
-        for item in players_items:
+        for item in gv.player_items:
             print(f"{item.name}\n"
                   f"{item.desc}\n"
                   f"___________________________________________________________________________")
@@ -509,7 +491,6 @@ def actionwork():
         actionworksub(job_to_do)
 
 def actionworksub(used_job):
-    global player_money
     match used_job:
 
         #clean airport job
@@ -528,29 +509,29 @@ def actionworksub(used_job):
                     print()
                 else:
                     print("Cleaning the airport...")
-                    if CAFG_items.janitor in players_items: #Gives extra money if player has janitors clothes
+                    if CAFG_items.janitor in gv.player_items: #Gives extra money if player has janitors clothes
                         money = 50*int(worktime)
-                        player_money += money
+                        gv.player_money += money
                         print(f"You cleaned the airport for {money}€!")
-                        print(f"Your current balance is {player_money}€.")
+                        print(f"Your current balance is {gv.player_money}€.")
                         stopwork=True
                     else:
                         money = 20*int(worktime)
-                        player_money += money
+                        gv.player_money += money
                         print(f"You cleaned the airport for {money}€...")
-                        print(f"Your current balance is {player_money}€.")
+                        print(f"Your current balance is {gv.player_money}€.")
                         stopwork= True
                 print()
-                timehandler(int(worktime),-5) #Uses worktime amount of time_units and decreases the local threat by -5 per spent unit.
+                timehandler(int(worktime),-5) #Uses worktime amount of gv.time_units and decreases the local threat by -5 per spent unit.
             return
 
         #ROBS AN MF
         case "rob":
-            robbed=random.randint(1+player_luck,200+player_luck)
+            robbed=random.randint(1+gv.player_luck,200+gv.player_luck)
             print(f"You robbed an random civilian for {robbed}€!")
-            player_money += robbed
+            gv.player_money += robbed
             # threat increases by 10 for every € stolen, player luck decreases this
-            localthreathandler(1,robbed*(10-(int(player_luck/10))))
+            localthreathandler(1,robbed*(10-(int(gv.player_luck/10))))
             return
 
         case _:
@@ -560,11 +541,10 @@ def actionworksub(used_job):
 #checks for passive and active item effects at the start of the turn
 def itemchecker():
     # !!!!!!!!!!!!PLACEHOLDER!!!!!!!!!!!!
-    global local_threat, global_threat, player_luck
     print("checking player items")
 
     #checks if player has a nuclear warhead.
-    if CAFG_items.warhead in players_items:
+    if CAFG_items.warhead in gv.player_items:
         stabilitycheck = random.randint(0, 10)
         if stabilitycheck <= 1:
             print()
@@ -583,12 +563,12 @@ def itemchecker():
                 deathhandler()
             else:
                 print("The warhead falls silent again...")
-        local_threat[current_country] = 0
-        global_threat -= int(global_threat*0.05)
-    if CAFG_items.s_rabbit_paw in players_items:
+        gv.local_threat[gv.current_country] = 0
+        gv.global_threat -= int(gv.global_threat*0.05)
+    if CAFG_items.s_rabbit_paw in gv.player_items:
         luck = random.randint(0, 15)
         print(f"The rabbit's paw gives you +{luck} luck!")
-        player_luck += luck
+        gv.player_luck += luck
     print()
     return
 
@@ -596,9 +576,9 @@ def itemchecker():
 def shoprandomiser(amount_of_items):
     # !!!!!!!!!!!!PLACEHOLDER!!!!!!!!!!!!
     # UTILIZE LUCK IN THIS!!
-    shop_items.clear()
+    gv.shop_items.clear()
     for i in range(amount_of_items):
-        shop_items.append(CAFG_items.shop_items[random.randint(0, len(CAFG_items.shop_items)-1)])
+        gv.shop_items.append(CAFG_items.shop_items[random.randint(0, len(CAFG_items.shop_items)-1)])
     return
 
 #randomises jobs at the start of the turn
@@ -608,8 +588,7 @@ def jobrandomiser():
 
 #refreshesh usable time units at the start of the turn
 def timeunitrefresher(amount):
-    global time_units
-    time_units = amount
+    gv.time_units = amount
 
 #handles the movement from country to country
 def movementhandler():
@@ -619,39 +598,37 @@ def movementhandler():
         choiceleaveorstay = input("Do you want to stay in the country or leave the country?(leave/stay): ")
         if choiceleaveorstay == "leave" or choiceleaveorstay == "stay":
             break
-    global current_score, previous_travel_distance, global_country_index, current_country
     list_of_countries = ["France", "Russia", "USA", "China",
                          "Japan", "Germany", "UK", "Australia",
                          "India", "Canada", "Spain", "Italy",
                          "Finland", "Turkey", "Brazil", "New Zealand"]
     if choiceleaveorstay == "leave":
         print("Moving to the next country")
-        current_score += 300
-        previous_travel_distance = 1000
-        global_country_index += 1
-        if global_country_index < len(list_of_countries):
-            current_country = list_of_countries[global_country_index]
+        gv.current_score += 300
+        gv.previous_travel_distance = 1000
+        gv.global_country_index += 1
+        if gv.global_country_index < len(list_of_countries):
+            gv.current_country = list_of_countries[gv.global_country_index]
         else:
-            global_country_index = 0
-            current_country = list_of_countries[global_country_index]
+            gv.global_country_index = 0
+            gv.current_country = list_of_countries[gv.global_country_index]
 
-        if current_country not in local_threat.keys():
-            local_threat[current_country] = 0
+        if gv.current_country not in gv.local_threat.keys():
+            gv.local_threat[gv.current_country] = 0
     elif choiceleaveorstay == "stay":
         print("Moving to the next airport within the country")
-        current_score += 100
-        previous_travel_distance = 200
+        gv.current_score += 100
+        gv.previous_travel_distance = 200
     else:
         print("Something went wrong")
 
 #you are dead
 def deathhandler():
-    global current_score
     print()
     print("You are dead")
     print()
-    current_score += player_money // 4
-    print(f"Your final score is {current_score}")
+    gv.current_score += gv.player_money // 4
+    print(f"Your final score is {gv.current_score}")
     quit()
 
 turnhandler()
