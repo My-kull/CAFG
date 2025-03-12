@@ -191,6 +191,9 @@ def actionhandlersub(command):
         case "giveitem":
             giveitem()
             return True
+        case "takeitem":
+            takeitem()
+            return True
 
         #incorrect input
         case _:
@@ -211,15 +214,15 @@ def listcommands():
 
 #DEV TOOL! Gives player an item corresponding to itemid
 def giveitem():
-    giveitem = True
+    give_item = True
     print(f"There are {len(CAFG_items.all_items)} items in the game.")
-    while giveitem:
-        itemid = input("Enter itemid(N to stop): ")
+    while give_item:
+        itemid = input("Enter itemid(N to cancel): ")
         if itemid == "N":
             print()
-            giveitem = False
+            give_item = False
         elif not itemid.isdigit():
-            print("Incorrect input")
+            print("Incorrect input.")
             print()
         elif int(itemid) > len(CAFG_items.all_items):
             print("Invalid ID.")
@@ -227,7 +230,38 @@ def giveitem():
         else:
             print(f"{CAFG_items.all_items[int(itemid)-1].name} added to player_items.")
             players_items.append(CAFG_items.all_items[int(itemid)-1])
-            giveitem = False
+            give_item = False
+
+#DEV TOOL! Removes an item from player inventory
+def takeitem():
+    if len(players_items) > 0:
+        print("Your items:")
+        print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+        item_number = 0
+        for item in players_items:
+            print(f"{item_number + 1} {item.name}\n")
+            item_number += 1
+        print()
+        take_item = True
+        while take_item:
+            itemnum = input("Enter item number(N to cancel): ")
+            if itemnum == "N":
+                print()
+                take_item = False
+            elif not itemnum.isdigit():
+                print("Incorrect input.")
+                print()
+            elif 1 > int(itemnum) or int(itemnum) > len(players_items):
+                print("Invalid number")
+                print()
+            else:
+                print(f"{players_items[int(itemnum)-1].name} removed from players_items.")
+                players_items.pop(int(itemnum)-1)
+                take_item = False
+    else:
+        print("players_items is empty.")
+        print()
+
 
 #prints player and game stats
 def checkstats():
@@ -511,7 +545,7 @@ def itemchecker():
         stabilitycheck = random.randint(0, 10)
         if stabilitycheck <= 1:
             print()
-            print("The nuclear warhead has become less stable! you can hear it ticking!")
+            print("The warhead became less stable! You can hear it ticking!")
             time.sleep(1.5)
             print("\x1b[3mTick tock.\x1b[0m")
             time.sleep(1.5)
