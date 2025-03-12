@@ -4,7 +4,6 @@ import CAFG_variables as gv #Import Global Variables
 import CAFG_items
 import random
 import CAFG_events
-from CAFG_events import used_events
 
 
 #handlers that perform the basic functions
@@ -70,8 +69,8 @@ def eventhandlersub(event_luck):
             event=random.randint(0 ,len(CAFG_events.used_events)-1)
             #prints special event start bar
             print("___________________________________________________________________________")
-            print(used_events[int(event)].desc)
-            match used_events[int(event)]:
+            print(CAFG_events.used_events[int(event)].desc)
+            match CAFG_events.used_events[int(event)]:
 
                 #gives player luck between 50 and 100
                 case CAFG_events.fox_fires:
