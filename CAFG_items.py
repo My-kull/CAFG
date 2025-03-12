@@ -9,11 +9,11 @@ free = 0
 
 # About attribute.rarity: Items rarity placeholder.
 #   Rarities ranging from most common to most rare:
-#       * Todella yleinen.
-#       * Yleinen.
-#       * Semi harvinainen.
-#       * Harvinainen.
-#       * Erittäin harvinainen.
+todella_yleinen = 1
+yleinen = 2
+semi_harvinainen = 3
+harvinainen = 4
+erittäin_harvinainen = 5
 
 # About attribute.price: price of the item, called values are at the very top of this file.
 
@@ -28,7 +28,7 @@ free = 0
 class Item:
     desc = ""
     buy = ""
-    rarity = ""
+    rarity = 1
     price = 0
     use_time = 0
     itemid = 0
@@ -43,7 +43,7 @@ invis_cape.desc = ("A cloack that makes you invisible.\n"
                    "\n"
                    "(-50% local threat.).")
 invis_cape.buy = f"You imagine how easily you could've gotten away with stealing this instead."
-invis_cape.rarity = "Harvinainen"
+invis_cape.rarity = harvinainen
 invis_cape.price = costly
 invis_cape.use_time = 1
 invis_cape.active = True
@@ -57,7 +57,7 @@ lottery_fake.desc = ("With your skills- I mean luck, you modify-\n"
                 "\n"
                 "- Gives between 1 000€ and 3 000€, but increases local threat by 3 000 per use.")
 lottery_fake.buy = f""
-lottery_fake.rarity = "Semi-harvinainen"
+lottery_fake.rarity = semi_harvinainen
 lottery_fake.price = expensive
 lottery_fake.use_time = 1
 lottery_fake.type = True
@@ -73,7 +73,7 @@ lottery_coupon.desc = (f"An actually legit 100% real lottery coupon that's not g
                        f"- ranging from 20% to 5% theres a chance to get from 1€ to 2000€,\n"
                        f"- 0.01% chance to get the jackpot of 10 000€)")
 lottery_coupon.buy = "Surely this one's the one to make you rich! "
-lottery_coupon.rarity = "Todella yleinen"
+lottery_coupon.rarity = todella_yleinen
 lottery_coupon.price = cheap
 lottery_coupon.use_time = 1
 lottery_coupon.active = True
@@ -86,7 +86,7 @@ luck_cookie.desc = ("A traditional chinese cookie that tells your fortune!\n"
                     "\n"
                     "+ luck")
 luck_cookie.buy = ""
-luck_cookie.rarity = "Yleinen"
+luck_cookie.rarity = yleinen
 luck_cookie.price = cheap
 luck_cookie.use_time = 1
 luck_cookie.active = True
@@ -99,7 +99,7 @@ energydrink.desc= (f"EbinSip the iconic energy drink.\n"
                    f"When consumed:\n"
                    f"- +4 time units")
 energydrink.buy = "Ebin :DD"
-energydrink.rarity = "Semi harvinainen"
+energydrink.rarity = semi_harvinainen
 energydrink.price = average
 energydrink.use_time = 1
 energydrink.active = True
@@ -112,7 +112,7 @@ snow_globe.desc = ("A Snow globe suvenier.\n"
                    "\n"
                    "+ 100 score")
 snow_globe.buy = ""
-snow_globe.rarity = "Harvinainen"
+snow_globe.rarity = harvinainen
 snow_globe.price = average
 snow_globe.use_time = -1
 snow_globe.active = False
@@ -123,7 +123,7 @@ arcade_ticket.desc = ("A ticket to the arcade where you can play games and have 
                       "\n"
                       "+ 100 score")
 arcade_ticket.buy = ""
-arcade_ticket.rarity = "Semi harvinainen"
+arcade_ticket.rarity = semi_harvinainen
 arcade_ticket.price = very_cheap
 arcade_ticket.use_time = 1
 arcade_ticket.active = True
@@ -134,7 +134,7 @@ s_rabbit_paw.desc = ("Straight from the vast prairies of space.\n"
                      "\n"
                      "+ luck")
 s_rabbit_paw.buy = ""
-s_rabbit_paw.rarity = "Harvinainen"
+s_rabbit_paw.rarity = harvinainen
 s_rabbit_paw.price = expensive
 s_rabbit_paw.use_time = -1
 s_rabbit_paw.active = False
@@ -146,7 +146,7 @@ janitor.desc = ("Allows you to disguise yourself as a janitor and work for some 
                 "\n"
                 "- Increases income from [job]:'Clean the Airport' by 30€")
 janitor.buy = ""
-janitor.rarity = "Yleinen"
+janitor.rarity = yleinen
 janitor.price = costly
 janitor.use_time = -1
 janitor.active = False
@@ -161,7 +161,7 @@ flightmaster.desc = ("Allows you to disguise your self as a flight master\n"
                      "+ 200€ from the next flight\n"
                      "- 0.1% chance to die on the next flight.%")
 flightmaster.buy = ""
-flightmaster.rarity = "Harvinainen"
+flightmaster.rarity = harvinainen
 flightmaster.price = expensive
 flightmaster.use_time = -1
 flightmaster.active = False
@@ -171,11 +171,11 @@ flightmaster.active = False
 bulletvest = Item("Bulletproof Vest")
 bulletvest.desc = ("Allows you to take more hits.\n"
                    "\n"
-                   "(saves your life in some cases)")
+                   "(Saves your life in some cases)")
 bulletvest.buy = (f"The cashier gives you bombastic side eye and is probably thinking:\n"
                   f"'What'd you need that for?' You respond by giving the cashier back the bombastic side eye\n"
                   f"for selling such things in the first place.")
-bulletvest.rarity = "Harvinainen"
+bulletvest.rarity = harvinainen
 bulletvest.price = expensive
 bulletvest.use_time = 1
 bulletvest.active = False
@@ -198,7 +198,7 @@ tonnin_seteli.buy = (f"\x1b[3mYou find that 1000€ bill is the smallest you hav
                      f"It's like his consciousness had left this plane of existence. You wave your arm in front of him,\n"
                      f"but its no use. The money is gone now. No way to get it back.\n"
                      f"Are you really certain it was actually 1000€ that you gave? \x1b[0m")
-tonnin_seteli.rarity = "Erittäin harvinainen"
+tonnin_seteli.rarity = erittäin_harvinainen
 tonnin_seteli.price = very_cheap  # Se oli tonnin seteli...
 tonnin_seteli.use_time = -1
 tonnin_seteli.active = False
@@ -214,7 +214,7 @@ warhead.desc = ("A Nuclear Warhead. Obviously no one wants to arrest a man with 
                 "- -5% global threat"
                 "- every turn, 5% chance to roll a D20. If it lands on 1 the warhead detonates ending the game.")
 warhead.buy = "You can't believe you got this for free, it feels too good to be true."
-warhead.rarity = "Erittäin Harvinainen"
+warhead.rarity = erittäin_harvinainen
 warhead.price = free  # it's free!
 warhead.use_time = -1
 warhead.active = False
@@ -228,10 +228,42 @@ kerosene.desc = ("Can't melt steel beams.\n"
                  "-doesn't do anything, yet\n"
                  "no, you cannot drink it.")
 kerosene.buy = "KEROSENE!"
-kerosene.rarity = "Semi Harvinainen"
+kerosene.rarity = semi_harvinainen
 kerosene.price = costly
 kerosene.use_time = 1
 kerosene.active = True
+
+flight_membership = Item("AirPremium membership")
+flight_membership.desc = (f"Membership for\x1b[3m the\x1b[0m airline. Yes, the only one you are using.\n"
+                          f"\x1b[3mIncludes a seat in the first class.\x1b[0m\n"
+                          f"\n"
+                          f"-30% ticket price on each flight.")
+flight_membership.buy = ""
+flight_membership.rarity = harvinainen
+flight_membership.price = very_expensive
+flight_membership.use_time= -1
+flight_membership.active = False
+
+firearm = Item("Gun")
+firearm.desc = ("Its a gun.\n"
+                "\n"
+                "-increases income from [job]: 'rob' by ~25%"
+                "-can be used as a 'negotiator' in some cases.")
+firearm.buy = "Freedom dispenser acquired."
+firearm.rarity = semi_harvinainen
+firearm.price = expensive
+firearm.use_time = -1
+firearm.active = False
+
+gun_mag = Item("Loaded magazine")
+gun_mag.desc = ("A mag for a gun. Filled with bullets.\n"
+                "\n"
+                "-needs a 'Gun' to be used.")
+gun_mag.buy = "So much 'murica"
+gun_mag.rarity = semi_harvinainen
+gun_mag.price = costly
+gun_mag.use_time = 1
+gun_mag.active = True
 
 #these are the lists of items that the game uses
 shop_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, s_rabbit_paw, janitor, energydrink, tonnin_seteli, bulletvest, arcade_ticket, snow_globe]
