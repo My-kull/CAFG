@@ -3,6 +3,7 @@ import CAFG_items
 import random
 import CAFG_events
 import mysql.connector
+import math
 
 conn = mysql.connector.connect(
     host="localhost",
@@ -561,31 +562,83 @@ def timeunitrefresher(amount):
 
 
 # handles the movement from country to country
+
+
+def haversine(lat1, lon1, lat2, lon2):
+    """Calculate the great-circle distance between two points using the Haversine formula."""
+    R = 6371  # Earth radius in km
+    phi1, phi2 = math.radians(lat1), math.radians(lat2)
+    delta_phi = math.radians(lat2 - lat1)
+    delta_lambda = math.radians(lon2 - lon1)
+
+    a = (
+        math.sin(delta_phi / 2.0) ** 2
+        + math.cos(phi1) * math.cos(phi2) * math.sin(delta_lambda / 2.0) ** 2
+    )
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+    return R * c  # Distance in km
+
+
 def movementhandler():
     if not conn.is_connected():
         conn.reconnect()
 
     cursor = conn.cursor()
 
-    cursor.execute("SELECT id, name FROM airport")
-    airport = cursor.fetchall()
+    # Get all airport data including ICAO codes and coordinates
+    cursor.execute(
+        "SELECT id, gps_code, name, latitude_deg, longitude_deg FROM airport WHERE gps_code IS NOT NULL"
+    )
+    airports = cursor.fetchall()
 
     print("Available airports: ")
-    for port in airport:
-        print(f"{port[0]}: {port[1]}")
+    for port in airports:
+        print(f"{port[0]} ({port[1]}): {port[2]}")  # Display ID, ICAO code, and name
 
+    # Select a starting airport
     choice = None
-    while choice not in [str(port[0]) for port in airport]:
-        choice = input("Enter the ID of the airport you want to go to: ")
+    while choice not in [str(port[0]) for port in airports]:
+        choice = input("Enter the ID of the airport you are currently at: ")
 
-    chosen_airport = next(port for port in airport if str(port[0]) == choice)
-    print(f"You have chosen to go to {chosen_airport[1]}")
+    current_airport = next(port for port in airports if str(port[0]) == choice)
+    current_lat, current_lon = current_airport[3], current_airport[4]
 
-    gv.current_country = chosen_airport[1]
+    print(f"\nYou are currently at {current_airport[2]} ({current_airport[1]}).")
+
+    # Find nearby airports
+    nearby_airports = [
+        port
+        for port in airports
+        if port[0] != current_airport[0]
+        and haversine(current_lat, current_lon, port[3], port[4]) < 5000
+    ]
+
+    if not nearby_airports:
+        print("No airports within 5000 km. You may need a longer-range travel option.")
+        return
+
+    print("\nNearby airports within 5000 km:")
+    for port in nearby_airports:
+        distance = haversine(current_lat, current_lon, port[3], port[4])
+        print(f"{port[0]} ({port[1]}): {port[2]} - {distance:.2f} km away")
+
+    # Choose destination
+    dest_choice = None
+    while dest_choice not in [str(port[0]) for port in nearby_airports]:
+        dest_choice = input("Enter the ID of the airport you want to go to: ")
+
+    chosen_airport = next(
+        port for port in nearby_airports if str(port[0]) == dest_choice
+    )
+    print(f"\nYou have chosen to go to {chosen_airport[2]} ({chosen_airport[1]}).")
+
+    # Update game variables
+    gv.current_country = chosen_airport[2]  # Update based on the airport name
     gv.current_score += 300
-    gv.previous_travel_distance = 1000
-
-    cursor.close()
+    gv.previous_travel_distance = haversine(
+        current_lat, current_lon, chosen_airport[3], chosen_airport[4]
+    )
     # you are dead
 
 
