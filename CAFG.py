@@ -1,5 +1,4 @@
 import mysql.connector
-import CAFG_items
 import EventHandler
 
 try:
@@ -21,3 +20,12 @@ try:
     conn.close()
 except mysql.connector.Error as err:
     print(f"Error: {err}")
+
+
+print("___________________________________________________________________________")
+print("Suddenly and without warning your spaceship explodes.")
+print("You find yourself as a stranger in a strange land.")
+print("You deside to become a tourist as there is nothing else to do.")
+print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+print()
+EventHandler.turnhandler()
