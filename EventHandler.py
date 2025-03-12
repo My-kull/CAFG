@@ -394,6 +394,33 @@ def actionworksub(used_job):
                     print("Invalid work time.")
                     print()
                 else:
+                    cleaning_art = [
+                        r"""        "Sweep, sweep sweep..."
+                (ㆆ_ㆆ)
+               🧹 /|
+                  / \ """,
+                        r"""       "I should've just robbed a guy..."
+                (ㆆ_ㆆ)
+               🧹 /|
+                  / \ """,
+                        r"""        "Is this blood...?"
+                (⊙_⊙;)
+               🧹 /|
+                  / \ """,
+                        r"""
+    "d̴̼͉̈̆f̵̭̒̅̎̆̚o̴̗͙͎̍͐͊͠g̸̢̟͎̜͌̚͘s̴̯̒̓̈p̸̹͚͌̎̿̂͠ǧ̵̰͛ͅò̸͍̃̇̄̈́͜ẽ̸̱̻̞̹r̸͖͉̃͆͘j̷̡̲̹̯̍͜g̶̡̲̠͙̐̂̾͜p̶̧̟̱̲̐́̓̚"
+                  👽
+               🧹 /|
+                  / \
+                        """,
+                          r"""
+        "WI WI WI UWAUWA"
+                ₍^. .^₎
+               🧹 /|
+                  / \
+                          """
+                    ]
+                    print(random.choice(cleaning_art))
                     print("Cleaning the airport...")
                     if CAFG_items.janitor in gv.player_items: #Gives extra money if player has janitors clothes
                         money = 50*int(worktime)
@@ -414,6 +441,10 @@ def actionworksub(used_job):
         #ROBS AN MF
         case "rob":
             robbed=random.randint(1+gv.player_luck,200+gv.player_luck)
+            print(r"""                 "Give money thx."
+                   ( ͡❛ ͜ʖ ͡❛)      (⊙_⊙;)
+                       |\ 🔪         /|      
+                     / \            / \ """)
             print(f"You robbed an random civilian for {robbed}€!")
             gv.player_money += robbed
             # threat increases by 10 for every € stolen, player luck decreases this
@@ -471,6 +502,32 @@ def movementhandler():
                          "India", "Canada", "Spain", "Italy",
                          "Finland", "Turkey", "Brazil", "New Zealand"]
     if choiceleaveorstay == "leave":
+        print(r"""
+                        .               					
+                        |					
+               .               /				
+                \       I     				
+                            /
+                  \  ,g88R_
+                    d888(`  ).                   _
+           -  --==  888(     ).=--           .+(`  )`.
+         )         Y8P(       '`.          :(   .    )
+                  .+(`(      .   )     .--  `.  (    ) )
+                ((    (..__.:'-'   .=(   )   ` _`  ) )
+         `.     `(       ) )       (   .  )     (   )  ._
+           )      ` __.:'   )     (   (   ))     `-'.:(`  )
+        )  )  ( )       --'       `- __.'         :(      ))
+         .-'  (_.'          .')                    `(    )  ))
+                                  (_  )                     ` __.:'                    	
+                  ______
+                 _\ _~-\___
+         =  = ==(____AA____D
+                  \_____\___________________,-~~~~~~~`-.._
+                  /     o O o o o o O O o o o o o o O o  |\_
+                  `~-.__        ___..----..                  )
+                        `---~~\___________/------------`````
+                        =  ===(_________D
+             """)
         print("Moving to the next country")
         gv.current_score += 300
         gv.previous_travel_distance = 1000
@@ -484,6 +541,32 @@ def movementhandler():
         if gv.current_country not in gv.local_threat.keys():
             gv.local_threat[gv.current_country] = 0
     elif choiceleaveorstay == "stay":
+        print(r"""
+                .               					
+                |					
+       .               /				
+        \       I     				
+                    /
+          \  ,g88R_
+            d888(`  ).                   _
+   -  --==  888(     ).=--           .+(`  )`.
+ )         Y8P(       '`.          :(   .    )
+          .+(`(      .   )     .--  `.  (    ) )
+        ((    (..__.:'-'   .=(   )   ` _`  ) )
+ `.     `(       ) )       (   .  )     (   )  ._
+   )      ` __.:'   )     (   (   ))     `-'.:(`  )
+)  )  ( )       --'       `- __.'         :(      ))
+ .-'  (_.'          .')                    `(    )  ))
+                          (_  )                     ` __.:'                    	
+          ______
+         _\ _~-\___
+ =  = ==(____AA____D
+          \_____\___________________,-~~~~~~~`-.._
+          /     o O o o o o O O o o o o o o O o  |\_
+          `~-.__        ___..----..                  )
+                `---~~\___________/------------`````
+                =  ===(_________D
+     """)
         print("Moving to the next airport within the country")
         gv.current_score += 100
         gv.previous_travel_distance = 200
@@ -500,9 +583,12 @@ def deathhandler():
     quit()
 
 print("___________________________________________________________________________")
-print("Suddenly and without warning your spaceship explodes.")
-print("You find yourself as a stranger in a strange land.")
-print("You deside to become a tourist as there is nothing else to do.")
+print("You're an extraterrestial alien, one who was flying carefree with your UFO. You just enjoyed exploring the inky black space.")
+print("But a critical system failure sent your vessel spiraling out of control, tearing through the sky like a fallen meteor.")
+print("You landed in Earth, a world inhabited by strange bipeds who have built a civilization. You decide to shapeshift into this strange form.")
+print("With no possible way to return to the galaxy, you decide to blend in, become a tourist. Grab a hawaiian shirt that tourists wear.")
+print("But be careful. The governments of all countries have been informed of an extraterrestial creature roaming around the world.")
+print("Still, you decide to fly around to see the wonders of Earth. Just try to not get killed!")
 print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
 print()
 turnhandler()
