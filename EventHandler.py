@@ -562,6 +562,9 @@ def timeunitrefresher(amount):
 
 # handles the movement from country to country
 def movementhandler():
+    if not conn.is_connected():
+        conn.reconnect()
+
     cursor = conn.cursor()
 
     cursor.execute("SELECT id, name FROM airport")
@@ -572,88 +575,20 @@ def movementhandler():
         print(f"{port[0]}: {port[1]}")
 
     choice = None
-    while choice not in [str(airport[0]) for port in airport]:
+    while choice not in [str(port[0]) for port in airport]:
         choice = input("Enter the ID of the airport you want to go to: ")
 
     chosen_airport = next(port for port in airport if str(port[0]) == choice)
     print(f"You have chosen to go to {chosen_airport[1]}")
 
+    gv.current_country = chosen_airport[1]
+    gv.current_score += 300
+    gv.previous_travel_distance = 1000
+
     cursor.close()
-
-    if choiceleaveorstay == "leave":
-        print(r"""
-                        .               					
-                        |					
-               .               /				
-                \       I     				
-                            /
-                  \  ,g88R_
-                    d888(`  ).                   _
-           -  --==  888(     ).=--           .+(`  )`.
-         )         Y8P(       '`.          :(   .    )
-                  .+(`(      .   )     .--  `.  (    ) )
-                ((    (..__.:'-'   .=(   )   ` _`  ) )
-         `.     `(       ) )       (   .  )     (   )  ._
-           )      ` __.:'   )     (   (   ))     `-'.:(`  )
-        )  )  ( )       --'       `- __.'         :(      ))
-         .-'  (_.'          .')                    `(    )  ))
-                                  (_  )                     ` __.:'                    	
-                  ______
-                 _\ _~-\___
-         =  = ==(____AA____D
-                  \_____\___________________,-~~~~~~~`-.._
-                  /     o O o o o o O O o o o o o o O o  |\_
-                  `~-.__        ___..----..                  )
-                        `---~~\___________/------------`````
-                        =  ===(_________D
-             """)
-        print("Moving to the next country")
-        gv.current_score += 300
-        gv.previous_travel_distance = 1000
-        gv.global_country_index += 1
-        if gv.global_country_index < len(list_of_countries):
-            gv.current_country = list_of_countries[gv.global_country_index]
-        else:
-            gv.global_country_index = 0
-            gv.current_country = list_of_countries[gv.global_country_index]
-
-        if gv.current_country not in gv.local_threat.keys():
-            gv.local_threat[gv.current_country] = 0
-    elif choiceleaveorstay == "stay":
-        print(r"""
-                .               					
-                |					
-       .               /				
-        \       I     				
-                    /
-          \  ,g88R_
-            d888(`  ).                   _
-   -  --==  888(     ).=--           .+(`  )`.
- )         Y8P(       '`.          :(   .    )
-          .+(`(      .   )     .--  `.  (    ) )
-        ((    (..__.:'-'   .=(   )   ` _`  ) )
- `.     `(       ) )       (   .  )     (   )  ._
-   )      ` __.:'   )     (   (   ))     `-'.:(`  )
-)  )  ( )       --'       `- __.'         :(      ))
- .-'  (_.'          .')                    `(    )  ))
-                          (_  )                     ` __.:'                    	
-          ______
-         _\ _~-\___
- =  = ==(____AA____D
-          \_____\___________________,-~~~~~~~`-.._
-          /     o O o o o o O O o o o o o o O o  |\_
-          `~-.__        ___..----..                  )
-                `---~~\___________/------------`````
-                =  ===(_________D
-     """)
-        print("Moving to the next airport within the country")
-        gv.current_score += 100
-        gv.previous_travel_distance = 200
-    else:
-        print("Something went wrong")
+    # you are dead
 
 
-# you are dead
 def deathhandler():
     print()
     print("You are dead")
