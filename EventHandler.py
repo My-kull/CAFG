@@ -5,7 +5,6 @@ import CAFG_items
 import random
 import CAFG_events
 from CAFG_events import used_events
-from CAFG_items import qawason_items
 
 
 #handlers that perform the basic functions
@@ -68,7 +67,7 @@ def eventhandlersub(event_luck):
             gv.local_threat[gv.current_country] -= 5 #drops gv.local_threat by 5 units
             return
         case 5:
-            event=random.randint(0 ,2)
+            event=random.randint(0 ,len(CAFG_events.used_events)-1)
             #prints special event start bar
             print("___________________________________________________________________________")
             print(used_events[int(event)].desc)
@@ -76,78 +75,18 @@ def eventhandlersub(event_luck):
 
                 #gives player luck between 50 and 100
                 case CAFG_events.fox_fires:
-                    print("Their beaty has captured the attention of everyone.\n"
-                          "People are distracted and you feel more lucky.")
-                    addluck = random.randint(50,100)
-                    print(f"You gained +{addluck} luck!")
-                    gv.player_luck += addluck
+                    CAFG_events.fox_fires.activate()
 
                 #Adds a random item from the qwawason_items to player_items.
                 case CAFG_events.space_express:
-                    qawason_random_item = random.randint(0, len(qawason_items)-1)
-                    print(f"You got one {qawason_items[int(qawason_random_item)].name}!")
-                    gv.player_items.append(qawason_items[int(qawason_random_item)])
+                    CAFG_events.space_express.activate()
 
                 #If player succeeds, resets local threat. If player fails, game ends.(Unless player has bulletproof vest)
                 case CAFG_events.national_hero:  #
-                    print("Quickly! De-escalate the sitsuation!")
-                    active = True
-                    tries = 3
-                    random_correct = random.randint(1, 4)
-                    while active:
-                        print("1 : Negotiate peacefully so no one gets hurt.\n"
-                              "2 : Give them a cookie, maybe they are just hungry!\n"
-                              "3 : Insult them and their mother.\n"
-                              "4 : Lie to them.\n"
-                              "5 : Go in guns blazing and shoot the bastards.")
-                        choise = input("Choose what to do:")
-
-                        #checks for valid input.
-                        if not choise.isdigit():
-                            print("Wrong input!")
-
-                        #Checks if player chose violence and happens to have a gun and ammo.
-                        elif int(choise) == 5:
-                            if CAFG_items.firearm in gv.player_items and CAFG_items.gun_mag in gv.player_items:
-                                print("You load your gun and  the terrorists. The locals see you as a hero!\n"
-                                      "(Local threaet set to 0)")
-                                gv.player_items.pop(gv.player_items.index(CAFG_items.gun_mag))
-                                gv.local_threat[gv.current_country] = 0
-                                active = False
-                            elif CAFG_items.firearm in gv.player_items:
-                                print("You dont have ammo!")
-                            else:
-                                print("You dont have a gun!")
-
-                        #If choice is correct, gives unique dialog based on what was chosen.
-                        elif int(choise) == random_correct:
-                            match choise:
-                                case 1:
-                                    print("With your intelligence and charisma, you calm the terrorists down.\n"
-                                          "")
-                                case 2:
-                                    print("You throw the terrorists a cookie and say 'You're not you when you are hungry.'.")
-                                case 3:
-                                    print("You successfully insult the terrorist")
-                                case 4:
-                                    print("You tell the terrorists that .")
-                            print("You managed to de-escalate the sitsuation! The locals see you as a hero!\n"
-                                  "(Local threat set to 0)")
-                            gv.local_threat[gv.current_country] = 0
-                            active = False
-                        else:
-                            tries -= 1
-                            print(f"Wrong choise! Try again! {tries} tries remaining!")
-                            if tries <= 0:
-                                print()
-                                if CAFG_items.bulletvest in gv.player_items:
-                                    print("The terrorists opened fire but your bulletproof vest saved you.\n"
-                                          "The terrorists left the airport.\n")
-                                    gv.player_items.pop(gv.player_items.index(CAFG_items.bulletvest))
-                                    active = False
-                                else:
-                                    print("Your 'negotiations' failed and the terrororists got you.")
-                                    deathhandler()
+                    die = False
+                    CAFG_events.national_hero.activate()
+                    if die:
+                        deathhandler()
                     return
             #prints special event end bar.
             print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
@@ -490,8 +429,6 @@ def actionworksub(used_job):
 
 #checks for passive and active item effects at the start of the turn
 def itemchecker():
-    # !!!!!!!!!!!!PLACEHOLDER!!!!!!!!!!!!
-    print("checking player items")
 
     #checks if player has a nuclear warhead and acts accordingly.
     if CAFG_items.warhead in gv.player_items:
@@ -499,6 +436,7 @@ def itemchecker():
         CAFG_items.warhead.activate()
         if die:
             deathhandler()
+
     #checks if player has the rabbit paw and acts accordingly
     if CAFG_items.s_rabbit_paw in gv.player_items:
         CAFG_items.s_rabbit_paw.activate()
