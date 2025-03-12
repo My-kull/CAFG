@@ -31,7 +31,7 @@ def turnhandler():
         itemchecker()
         globalthreathandler()
         current_score += 100
-        if global_threat == 50000:
+        if global_threat == 20000:
             deathhandler()
         shoprandomiser(3)
         timehandler(0,0)
@@ -114,12 +114,40 @@ def eventhandlersub(event_luck):
                     while active:
                         print("1 : Negotiate peacefully so no one gets hurt.\n"
                               "2 : Give them a cookie, maybe they are just hungry!\n"
-                              "3 : Go in guns blazing and shoot the bastards.\n"
-                              "4 : Lie to them. Straight up lie to them about everything.")
+                              "3 : Insult them and their mother.\n"
+                              "4 : Lie to them.\n"
+                              "5 : Go in guns blazing and shoot the bastards.")
                         choise = input("Choose what to do:")
+
+                        #checks for valid input.
                         if not choise.isdigit():
                             print("Wrong input!")
+
+                        #Checks if player chose violence and happens to have a gun and ammo.
+                        elif int(choise) == 5:
+                            if CAFG_items.firearm in players_items and CAFG_items.gun_mag in players_items:
+                                print("You load your gun and  the terrorists. The locals see you as a hero!\n"
+                                      "(Local threaet set to 0)")
+                                players_items.pop(players_items.index(CAFG_items.gun_mag))
+                                local_threat[current_country] = 0
+                                active = False
+                            elif CAFG_items.firearm in players_items:
+                                print("You dont have ammo!")
+                            else:
+                                print("You dont have a gun!")
+
+                        #If choice is correct, gives unique dialog based on what was chosen.
                         elif int(choise) == random_correct:
+                            match choise:
+                                case 1:
+                                    print("With your intelligence and charisma, you calm the terrorists down.\n"
+                                          "")
+                                case 2:
+                                    print("You throw the terrorists a cookie and say 'You're not you when you are hungry.'.")
+                                case 3:
+                                    print("You successfully insult the terrorist")
+                                case 4:
+                                    print("You tell the terrorists that .")
                             print("You managed to de-escalate the sitsuation! The locals see you as a hero!\n"
                                   "(Local threat set to 0)")
                             local_threat[current_country] = 0
@@ -237,10 +265,9 @@ def takeitem():
     if len(players_items) > 0:
         print("Your items:")
         print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
-        item_number = 0
-        for item in players_items:
-            print(f"{item_number + 1} {item.name}\n")
-            item_number += 1
+        #prints players_items
+        for i, item in enumerate(players_items):
+            print(f"{i+1} {item.name}\n")
         print()
         take_item = True
         while take_item:
@@ -285,10 +312,8 @@ def actionuse():
     else:
         print("Your items:")
         print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
-        item_number = 0
-        for item in players_items:
-            print(f"{item_number + 1} {item.name}\n")
-            item_number += 1
+        for i, item in enumerate(players_items):
+            print(f"{i + 1} {item.name}\n")
         print()
 
         #checks if sent item number matches one from player_items
@@ -416,13 +441,11 @@ def actionbuy():
             print("You bought all the items. You lament that your shopping time has ended.")
             continue_using = False
             continue
-        item_number = 0
 
         #prints shop items
-        for item in shop_items:
-            print(f"{item_number + 1} {item.name}: {item.price}€")
+        for i, item in enumerate(shop_items):
+            print(f"{i + 1} {item.name}: {item.price}€")
             list_of_item_names.append(item.name)
-            item_number+=1
         print()
 
         #checks for valid input
