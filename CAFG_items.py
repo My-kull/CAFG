@@ -268,4 +268,4 @@ gun_mag.active = True
 #these are the lists of items that the game uses
 shop_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, s_rabbit_paw, janitor, energydrink, tonnin_seteli, bulletvest, arcade_ticket, snow_globe]
 qawason_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, s_rabbit_paw, energydrink, bulletvest, warhead]
-all_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, energydrink, snow_globe, arcade_ticket, s_rabbit_paw, janitor, flightmaster, bulletvest, tonnin_seteli, warhead, kerosene]
+all_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, energydrink, snow_globe, arcade_ticket, s_rabbit_paw, janitor, flightmaster, bulletvest, tonnin_seteli, warhead, kerosene, flight_membership, firearm, gun_mag]
