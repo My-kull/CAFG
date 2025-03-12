@@ -2,7 +2,16 @@ import CAFG_variables as gv  # Import Global Variables
 import CAFG_items
 import random
 import CAFG_events
+import mysql.connector
 
+conn = mysql.connector.connect(
+    host="localhost",
+    user="surviver",
+    password="123",
+    database="flight_game",
+    charset="latin1",
+    collation="latin1_swedish_ci",
+)
 
 # handlers that perform the basic functions
 
@@ -553,32 +562,24 @@ def timeunitrefresher(amount):
 
 # handles the movement from country to country
 def movementhandler():
-    # placeholder, replace with real code
-    choiceleaveorstay = ""
-    while True:
-        choiceleaveorstay = input(
-            "Do you want to stay in the country or leave the country?(leave/stay): "
-        )
-        if choiceleaveorstay == "leave" or choiceleaveorstay == "stay":
-            break
-    list_of_countries = [
-        "France",
-        "Russia",
-        "USA",
-        "China",
-        "Japan",
-        "Germany",
-        "UK",
-        "Australia",
-        "India",
-        "Canada",
-        "Spain",
-        "Italy",
-        "Finland",
-        "Turkey",
-        "Brazil",
-        "New Zealand",
-    ]
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT id, name FROM airport")
+    airport = cursor.fetchall()
+
+    print("Available airports: ")
+    for port in airport:
+        print(f"{port[0]}: {port[1]}")
+
+    choice = None
+    while choice not in [str(airport[0]) for port in airport]:
+        choice = input("Enter the ID of the airport you want to go to: ")
+
+    chosen_airport = next(port for port in airport if str(port[0]) == choice)
+    print(f"You have chosen to go to {chosen_airport[1]}")
+
+    cursor.close()
+
     if choiceleaveorstay == "leave":
         print(r"""
                         .               					
