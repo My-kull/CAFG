@@ -6,6 +6,9 @@ cheap = 10
 very_cheap = 2
 free = 0
 
+import time
+import random
+import CAFG_variables as gv #Import Global Variables
 
 # About attribute.rarity: Items rarity placeholder.
 #   Rarities ranging from most common to most rare:
@@ -13,7 +16,7 @@ todella_yleinen = 1
 yleinen = 2
 semi_harvinainen = 3
 harvinainen = 4
-erittäin_harvinainen = 5
+epic = 5
 
 # About attribute.price: price of the item, called values are at the very top of this file.
 
@@ -32,6 +35,7 @@ class Item:
     price = 0
     use_time = 0
     itemid = 0
+    activate = ""
     active = False
     def __init__(self, name):
         self.name = name
@@ -48,6 +52,11 @@ invis_cape.price = costly
 invis_cape.use_time = 1
 invis_cape.active = True
 #[local threat]/2 when used
+def invis(self):
+    gv.local_threat[gv.current_country] = gv.local_threat[gv.current_country] // 2
+    print("The cape made you harder to track! (Decreased local threat by 50%)")
+invis_cape.activate = invis.__get__(invis_cape,Item)
+
 
 
 lottery_fake = Item("Falsified Lottery Coupon")
@@ -61,7 +70,14 @@ lottery_fake.rarity = semi_harvinainen
 lottery_fake.price = expensive
 lottery_fake.use_time = 1
 lottery_fake.type = True
-#Gives 1000-3000€, threat up by 5 000 no matter the outcome.
+#Gives 1000-3000€, threat up by 3 000 no matter the outcome.
+def lotteryfake(self):
+    money = random.randint(1000, 3000)
+    gv.local_threat[gv.current_country] += 3000 - (gv.player_luck // 100)
+    print(f"You manage to get {money}€, but now you are in trouble!")
+    gv.player_money += money
+lottery_fake.activate = lotteryfake.__get__(lottery_fake,Item)
+
 
 
 lottery_coupon = Item("Legit Lottery Coupon")
@@ -77,8 +93,30 @@ lottery_coupon.rarity = todella_yleinen
 lottery_coupon.price = cheap
 lottery_coupon.use_time = 1
 lottery_coupon.active = True
+def lotterystart(self):
+    lottery = random.randint(0, 10000) + (gv.player_luck // 100)
+    if lottery <= 5000:
+        money = 0
+    elif 5000 < lottery < 7000:
+        money = random.randint(1, 5)
+    elif 7000 < lottery < 8000:
+        money = random.randint(5, 10)
+    elif 8000 < lottery < 9000:
+        money = random.randint(10, 50)
+    elif 9000 < lottery < 9500:
+        money = random.randint(50, 100)
+    elif 9500 < lottery < 9800:
+        money = random.randint(100, 500)
+    elif 9800 < lottery < 9999:
+        money = random.randint(500, 2000)
+    else:
+        money = 10000
+    print(f"Congratulations! You got {money}€ from the lottery!")
+    gv.player_money += money
+lottery_coupon.activate = lotterystart.__get__(lottery_coupon,Item)
 #50% chance to get nothing, 20% for 10-50€, 10% for 50-100€, 10% for 100-500€
 # 5% for 500€-700€, 3% for 700€-1000, 1.99% for 1000-2000€, 0.01% 10 000€
+
 
 
 luck_cookie = Item("Fortune Cookie")
@@ -90,7 +128,18 @@ luck_cookie.rarity = yleinen
 luck_cookie.price = cheap
 luck_cookie.use_time = 1
 luck_cookie.active = True
-#Increases luck, possibly add a small chance to decrease it instead?
+#Increases luck, there's a small chance to decrease it instead
+def fortune(self):
+    chance = random.randint(1, 6)
+    if chance == 1:
+        gv.player_luck += 10
+        luck = 10
+    else:
+        gv.player_luck -= 10
+        luck = -10
+    print(f"You read the fortune from the cookie and got {luck} luck!")
+luck_cookie.activate = fortune.__get__(luck_cookie, Item)
+
 
 
 energydrink = Item("ES :DDD")
@@ -104,6 +153,14 @@ energydrink.price = average
 energydrink.use_time = 1
 energydrink.active = True
 #pärisemää :D
+def addenergy(self):
+    addtime = 4
+    gv.time_units += addtime
+    print(f"You chug the energy drink and feel energized.\n"
+          f"You feel like you could do a wheelie with any vehicle.\n"
+          f"(Gained {addtime} time units)")
+energydrink.activate = addenergy.__get__(energydrink, Item)
+
 
 
 snow_globe = Item("Snow globe")
@@ -117,6 +174,15 @@ snow_globe.price = average
 snow_globe.use_time = -1
 snow_globe.active = False
 #score
+def shakeglobe(self):
+    print(f"You shake the snowglobe and watch the artificial snowflakes fall...\n"
+          f"...\n")
+    time.sleep(1.5)
+    print(f"What fun!!!")
+    gv.current_score += 100
+snow_globe.activate =shakeglobe.__get__(snow_globe, Item)
+
+
 
 arcade_ticket = Item("Arcade ticket")
 arcade_ticket.desc = ("A ticket to the arcade where you can play games and have fun!\n"
@@ -128,6 +194,12 @@ arcade_ticket.price = very_cheap
 arcade_ticket.use_time = 1
 arcade_ticket.active = True
 #scoreeeeeeeeeee
+def arcade(self):
+    print(f"You visit a local arcade to play some games and have some fun! Yippee!")
+    gv.current_score += 100
+arcade_ticket.activate = arcade.__get__(arcade,Item)
+
+
 
 s_rabbit_paw = Item("Space-rabbit Foot")
 s_rabbit_paw.desc = ("Straight from the vast prairies of space.\n"
@@ -139,6 +211,12 @@ s_rabbit_paw.price = expensive
 s_rabbit_paw.use_time = -1
 s_rabbit_paw.active = False
 #Adds a certain % buff to luck.
+def rabbitluck(self):
+    luck = random.randint(0, 20)
+    print(f"The rabbit's paw gives you +{luck} luck!")
+    gv.player_luck += luck
+s_rabbit_paw.activate = rabbitluck.__get__(s_rabbit_paw,Item)
+
 
 
 janitor = Item("Janitors Clothes")
@@ -151,6 +229,7 @@ janitor.price = costly
 janitor.use_time = -1
 janitor.active = False
 #Under "Work", gives like 20€
+
 
 
 flightmaster = Item("Flight-masters Clothes")
@@ -168,6 +247,7 @@ flightmaster.active = False
 #Under "Work", gives like 100€
 
 
+
 bulletvest = Item("Bulletproof Vest")
 bulletvest.desc = ("Allows you to take more hits.\n"
                    "\n"
@@ -180,6 +260,7 @@ bulletvest.price = expensive
 bulletvest.use_time = 1
 bulletvest.active = False
 #gives the player +50 health(once that is added)
+
 
 
 tonnin_seteli = Item("A coffee and a cookie")
@@ -198,11 +279,20 @@ tonnin_seteli.buy = (f"\x1b[3mYou find that 1000€ bill is the smallest you hav
                      f"It's like his consciousness had left this plane of existence. You wave your arm in front of him,\n"
                      f"but its no use. The money is gone now. No way to get it back.\n"
                      f"Are you really certain it was actually 1000€ that you gave? \x1b[0m")
-tonnin_seteli.rarity = erittäin_harvinainen
+tonnin_seteli.rarity = epic
 tonnin_seteli.price = very_cheap  # Se oli tonnin seteli...
 tonnin_seteli.use_time = -1
 tonnin_seteli.active = False
+def tonni(self):
+    print(f"You ponder at the purchase. It cost you 1000€...\n"
+          f"You've forgotten what the price was suppose to even be, why didn't the cashier give back any change?\n"
+          f"Was it actually 1000€? Is this some special coffee? Or some caviar cookie?\n"
+          f"Now you are questioning if you actually gave 1000€ for it or not...\n"
+          f"You don't even feel like eating this...")
+tonnin_seteli.activate = tonni.__get__(tonnin_seteli,Item)
 #Does absolutely nothing, reference to 'Kummeli'
+
+
 
 warhead = Item("Unstable Nuclear Warhead")
 warhead.desc = ("A Nuclear Warhead. Obviously no one wants to arrest a man with an armed bomb.\n"
@@ -214,13 +304,38 @@ warhead.desc = ("A Nuclear Warhead. Obviously no one wants to arrest a man with 
                 "- -5% global threat"
                 "- every turn, 5% chance to roll a D20. If it lands on 1 the warhead detonates ending the game.")
 warhead.buy = "You can't believe you got this for free, it feels too good to be true."
-warhead.rarity = erittäin_harvinainen
+warhead.rarity = epic
 warhead.price = free  # it's free!
 warhead.use_time = -1
 warhead.active = False
 #Local threat stays at 0, global threat grows by -5%
 #On start of a turn, theres ~1-5% to print= "The nuclear warhead is shaking!"
 #Then game throws a d20= if 2-20 = print "Nothing happened...", if 1 = "Game over"
+def checkstability():
+    stabilitycheck = random.randint(0, 10)
+    if stabilitycheck <= 1:
+        print()
+        print("The warhead became less stable! You can hear it ticking!")
+        time.sleep(1.5)
+        print("\x1b[3mTick tock.\x1b[0m")
+        time.sleep(1.5)
+        print("\x1b[3mTick tock.\x1b[0m")
+        time.sleep(1.5)
+        print("\x1b[3mTick tock.\x1b[0m")
+        time.sleep(1.5)
+        blowup = random.randint(1, 20)
+        if blowup == 1:
+            print()
+            print("The warhead detonates, evaporating you and the current airport in the blast.")
+            die = True
+            return die
+        else:
+            print("The warhead falls silent again...")
+    gv.local_threat[gv.current_country] = 0
+    gv.global_threat -= int(gv.global_threat * 0.05)
+warhead.activate = checkstability.__get__(warhead,Item)
+
+
 
 kerosene = Item("Jetfuel")
 kerosene.desc = ("Can't melt steel beams.\n"
@@ -233,6 +348,8 @@ kerosene.price = costly
 kerosene.use_time = 1
 kerosene.active = True
 
+
+
 flight_membership = Item("AirPremium membership")
 flight_membership.desc = (f"Membership for\x1b[3m the\x1b[0m airline. Yes, the only one you are using.\n"
                           f"\x1b[3mIncludes a seat in the first class.\x1b[0m\n"
@@ -243,6 +360,8 @@ flight_membership.rarity = harvinainen
 flight_membership.price = very_expensive
 flight_membership.use_time= -1
 flight_membership.active = False
+
+
 
 firearm = Item("Gun")
 firearm.desc = ("Its a gun.\n"
@@ -255,6 +374,8 @@ firearm.price = expensive
 firearm.use_time = -1
 firearm.active = False
 
+
+
 gun_mag = Item("Loaded magazine")
 gun_mag.desc = ("A mag for a gun. Filled with bullets.\n"
                 "\n"
@@ -265,7 +386,9 @@ gun_mag.price = costly
 gun_mag.use_time = 1
 gun_mag.active = True
 
+
+
 #these are the lists of items that the game uses
-shop_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, s_rabbit_paw, janitor, energydrink, tonnin_seteli, bulletvest, arcade_ticket, snow_globe]
+shop_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, janitor, energydrink, tonnin_seteli, bulletvest, arcade_ticket, snow_globe]
 qawason_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, s_rabbit_paw, energydrink, bulletvest, warhead]
 all_items = [invis_cape, lottery_fake, lottery_coupon, luck_cookie, energydrink, snow_globe, arcade_ticket, s_rabbit_paw, janitor, flightmaster, bulletvest, tonnin_seteli, warhead, kerosene, flight_membership, firearm, gun_mag]

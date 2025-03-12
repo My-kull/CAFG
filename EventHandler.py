@@ -6,7 +6,6 @@ import random
 import CAFG_events
 from CAFG_events import used_events
 from CAFG_items import qawason_items
-from CAFG_variables import local_threat
 
 
 #handlers that perform the basic functions
@@ -329,86 +328,37 @@ def actionusesub(used_item):
 
     #Checks what the used item is and acts accordingly.
     match use_item:
-
         #uses the fake lottery coupon
         case CAFG_items.lottery_fake:
-            money = random.randint(1000, 3000)
-            gv.local_threat[gv.current_country] += 3000 - (gv.player_luck // 100)
-            print(f"You manage to get {money}€, but now you are in trouble!")
-            gv.player_money += money
+            CAFG_items.lottery_fake.activate()
             return
-
         #uses lottery coupon
         case CAFG_items.lottery_coupon:
-            lottery = random.randint(0, 10000) + (gv.player_luck // 100)
-            if lottery <= 5000:
-                money = 0
-            elif 5000 < lottery < 7000:
-                money = random.randint(1, 5)
-            elif 7000 < lottery < 8000:
-                money = random.randint(5, 10)
-            elif 8000 < lottery < 9000:
-                money = random.randint(10, 50)
-            elif 9000 < lottery < 9500:
-                money = random.randint(50, 100)
-            elif 9500 < lottery < 9800:
-                money = random.randint(100, 500)
-            elif 9800 < lottery < 9999:
-                money = random.randint(500, 2000)
-            else:
-                money = 10000
-            print(f"Congratulations! You got {money}€ from the lottery!")
-            gv.player_money += money
+            CAFG_items.lottery_coupon.activate()
             return
-
         #uses the invisibility cape
         case CAFG_items.invis_cape:
-            gv.local_threat[gv.current_country] = gv.local_threat[gv.current_country] // 2
-            print("The cape made you harder to track! (Decreased local threat by 50%)")
+            CAFG_items.invis_cape.activate()
             return
-
         #uses the fortune cookie
         case CAFG_items.luck_cookie:
-            chance = random.randint(1, 6)
-            if chance == 1:
-                gv.player_luck += 10
-                luck = 10
-            else:
-                gv.player_luck -= 10
-                luck = -10
-            print(f"You read the fortune from the cookie and got {luck} luck!")
+            CAFG_items.luck_cookie.activate()
             return
-
         #uses the Ebin-Sip -energy drink
         case CAFG_items.energydrink:
-            addtime = 4
-            gv.time_units += addtime
-            print(f"You chug the energy drink and feel energized.\n"
-                  f"You feel like you could do a wheelie with any vehicle.\n"
-                  f"(Gained {addtime} time units)")
+            CAFG_items.energydrink.activate()
             return
-
         #ponders the used 1k bill.
         case CAFG_items.tonnin_seteli:
-            print(f"You ponder at the purchase. It cost you 1000€...\n"
-                f"You've forgotten what the price was suppose to even be, why didn't the cashier give back any change?\n"
-                f"Was it actually 1000€? Is this some special coffee? Or some caviar cookie?\n"
-                f"Now you are questioning if you actually gave 1000€ for it or not...\n"
-                f"You don't even feel like eating this...")
+            CAFG_items.tonnin_seteli.activate()
             return
-
         #uses the arcade ticket and gives score
         case CAFG_items.arcade_ticket:
-            print(f"You visit a local arcade to play some games and have some fun! Yippee!")
-            gv.current_score += 100
+            CAFG_items.arcade_ticket.activate()
             return
-
         #uses the snow globe and gives score
         case CAFG_items.snow_globe:
-            print(f"You shake the snowglobe and watch the artificial snowflakes fall...\n"
-                  f"...\n"
-                  f"What fun!!!")
-            gv.current_score += 100
+            CAFG_items.snow_globe.activate()
             return
 
 #buys more items
@@ -543,32 +493,15 @@ def itemchecker():
     # !!!!!!!!!!!!PLACEHOLDER!!!!!!!!!!!!
     print("checking player items")
 
-    #checks if player has a nuclear warhead.
+    #checks if player has a nuclear warhead and acts accordingly.
     if CAFG_items.warhead in gv.player_items:
-        stabilitycheck = random.randint(0, 10)
-        if stabilitycheck <= 1:
-            print()
-            print("The warhead became less stable! You can hear it ticking!")
-            time.sleep(1.5)
-            print("\x1b[3mTick tock.\x1b[0m")
-            time.sleep(1.5)
-            print("\x1b[3mTick tock.\x1b[0m")
-            time.sleep(1.5)
-            print("\x1b[3mTick tock.\x1b[0m")
-            time.sleep(1.5)
-            blowup = random.randint(1, 20)
-            if blowup == 1:
-                print()
-                print("The warhead detonates, evaporating you and the current airport in the blast.")
-                deathhandler()
-            else:
-                print("The warhead falls silent again...")
-        gv.local_threat[gv.current_country] = 0
-        gv.global_threat -= int(gv.global_threat*0.05)
+        die = False
+        CAFG_items.warhead.activate()
+        if die:
+            deathhandler()
+    #checks if player has the rabbit paw and acts accordingly
     if CAFG_items.s_rabbit_paw in gv.player_items:
-        luck = random.randint(0, 15)
-        print(f"The rabbit's paw gives you +{luck} luck!")
-        gv.player_luck += luck
+        CAFG_items.s_rabbit_paw.activate()
     print()
     return
 
