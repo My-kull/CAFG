@@ -499,4 +499,10 @@ def deathhandler():
     print(f"Your final score is {gv.current_score}")
     quit()
 
+print("___________________________________________________________________________")
+print("Suddenly and without warning your spaceship explodes.")
+print("You find yourself as a stranger in a strange land.")
+print("You deside to become a tourist as there is nothing else to do.")
+print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+print()
 turnhandler()
