@@ -579,7 +579,6 @@ def movementhandler():
     print(f"You have chosen to go to {chosen_airport[1]}")
 
     cursor.close()
-    conn.close()
 
     if choiceleaveorstay == "leave":
         print(r"""
@@ -662,3 +661,6 @@ def deathhandler():
     gv.current_score += gv.player_money // 4
     print(f"Your final score is {gv.current_score}")
     quit()
+
+
+conn.close()
