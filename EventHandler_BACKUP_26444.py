@@ -465,12 +465,12 @@ def actionworksub(used_job):
                🧹 /|
                   / \
                         """,
-                        r"""
+                          r"""
         "WI WI WI WI UWAUWA"
                 ₍^. .^₎
                🧹 /|
                   / \
-                          """,
+                          """
                     ]
                     print(random.choice(cleaning_art))
                     print("Cleaning the airport...")
@@ -496,11 +496,15 @@ def actionworksub(used_job):
 
         # ROBS AN MF
         case "rob":
+<<<<<<< HEAD
             robbed = random.randint(1 + gv.player_luck, 200 + gv.player_luck)
+=======
+            robbed=random.randint(1+gv.player_luck,200+gv.player_luck)
             print(r"""                 "Give money thx."
                    ( ͡❛ ͜ʖ ͡❛)      (⊙_⊙;)
                        |\ 🔪         /|      
                      / \            / \ """)
+>>>>>>> 13c25caffff400427835f9783a406659c9ba1fd5
             print(f"You robbed an random civilian for {robbed}€!")
             gv.player_money += robbed
             # threat increases by 10 for every € stolen, player luck decreases this
@@ -660,3 +664,17 @@ def deathhandler():
     gv.current_score += gv.player_money // 4
     print(f"Your final score is {gv.current_score}")
     quit()
+<<<<<<< HEAD
+=======
+
+print("___________________________________________________________________________")
+print("You're an extraterrestial alien, one who was flying carefree with your UFO. You just enjoyed exploring the inky black space.")
+print("But a critical system failure sent your vessel spiraling out of control, tearing through the sky like a fallen meteor.")
+print("You landed in Earth, a world inhabited by strange bipeds who have built a civilization. You decide to shapeshift into this strange form.")
+print("With no possible way to return to the galaxy, you decide to blend in, become a tourist. Grab a hawaiian shirt that tourists wear.")
+print("But be careful. The governments of all countries have been informed of an extraterrestial creature roaming around the world.")
+print("Still, you decide to fly around to see the wonders of Earth. Just try to not get killed!")
+print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+print()
+turnhandler()
+>>>>>>> 13c25caffff400427835f9783a406659c9ba1fd5
