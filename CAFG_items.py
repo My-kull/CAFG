@@ -193,11 +193,11 @@ tonnin_seteli.desc = ("Wasn't this suppose to cost just 2€?\n"
 tonnin_seteli.buy = (f"\x1b[3mYou find that 1000€ bill is the smallest you have so you decide to give it.\n"
                      f"The cashier gives very little change and then faces back to you.\n"
                      f"Although now he is just staring off into space with a blank expression on his face.\n"
-                     f"You start to question if you actually gave 1000€ or not and try to ask several times-\n"
+                     f"You start to question if you actually gave 1000€ or not and try to ask several times\n"
                      f"where the rest of the change is but you get no response. The cashier is like a statue.\n"
-                     f"It's like his consciousness left this plane of existence. You wave your arm in front of him,\n"
+                     f"It's like his consciousness had left this plane of existence. You wave your arm in front of him,\n"
                      f"but its no use. The money is gone now. No way to get it back.\n"
-                     f"Are you certain it was actually 1000€ you gave? \x1b[0m")
+                     f"Are you really certain it was actually 1000€ that you gave? \x1b[0m")
 tonnin_seteli.rarity = "Erittäin harvinainen"
 tonnin_seteli.price = very_cheap  # Se oli tonnin seteli...
 tonnin_seteli.use_time = -1
