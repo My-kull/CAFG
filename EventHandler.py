@@ -636,6 +636,33 @@ def movementhandler():
     chosen_airport = next(
         port for port in nearby_airports if str(port[0]) == dest_choice
     )
+    print (r"""
+              .
+               
+              |
+     .               /
+      \       I     
+                  /
+        \  ,g88R_
+          d888(`  ).                   _
+ -  --==  888(     ).=--           .+(`  )`.
+)         Y8P(       '`.          :(   .    )
+        .+(`(      .   )     .--  `.  (    ) )
+       ((    (..__.:'-'   .=(   )   ` _`  ) )
+`.     `(       ) )       (   .  )     (   )  ._
+  )      ` __.:'   )     (   (   ))     `-'.:(`  )
+)  )  ( )       --'       `- __.'         :(      ))
+.-'  (_.'          .')                    `(    )  ))
+                  (_  )                     ` __.:'                    
+         ______
+          _\ _~-\___
+  =  = ==(____AA____D
+              \_____\___________________,-~~~~~~~`-.._
+              /     o O o o o o O O o o o o o o O o  |\_
+              `~-.__        ___..----..                  )
+                    `---~~\___________/------------`````
+                    =  ===(_________D
+""")
     print(f"\nYou have chosen to go to {chosen_airport[2]} ({chosen_airport[1]}).")
 
     # Update game Variables
