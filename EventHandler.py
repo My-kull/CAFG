@@ -23,7 +23,7 @@ def turnhandler():
     while True:
         timeunitrefresher(10)
         itemchecker()
-        # globalthreathandler()
+        globalthreathandler()
         gv.current_score += 100
         if gv.global_threat == 20000:
             deathhandler()
@@ -34,11 +34,14 @@ def turnhandler():
         movementhandler()
 
 
-# def globalthreathandler():
-#   gv.global_threat += gv.previous_travel_distance + (
-#      gv.local_threat[gv.current_country] // 2
-#  )  # formula for increasing global threat
-#  return
+# formula for increasing global threat
+
+
+def globalthreathandler():
+    gv.global_threat += gv.previous_travel_distance + (
+        gv.local_threat[gv.current_country] // 2
+    )
+    return
 
 
 def localthreathandler(timespent, threat):
@@ -606,7 +609,7 @@ def movementhandler():
     print(f"\nYou are currently at {current_airport[2]} ({current_airport[1]}).")
 
     # Set travel range (change this value to fit your game mechanics)
-    travel_range_km = 5000  # Example range
+    travel_range_km = 3000  # Example range
 
     # Find nearby airports within the range
     nearby_airports = [

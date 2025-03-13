@@ -1,7 +1,7 @@
 # system global variables
 current_score = 0
 global_threat = 0
-local_threat = {"Paris-Orly Airport": 0}
+local_threat = {"AGGH": 0}
 shop_items = []
 # player global variables
 time_units = 10
