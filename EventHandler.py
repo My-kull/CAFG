@@ -638,8 +638,8 @@ def movementhandler():
     )
     print(f"\nYou have chosen to go to {chosen_airport[2]} ({chosen_airport[1]}).")
 
-    # Update game variables
-    gv.current_airport = chosen_airport[1]  # Update with ICAO code
+    # Update game Variables
+    gv.update_current_country(chosen_airport[1])
     gv.current_score += 300
     gv.previous_travel_distance = haversine(
         current_lat, current_lon, chosen_airport[3], chosen_airport[4]
