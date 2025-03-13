@@ -23,7 +23,7 @@ def turnhandler():
     while True:
         timeunitrefresher(10)
         itemchecker()
-        globalthreathandler()
+        # globalthreathandler()
         gv.current_score += 100
         if gv.global_threat == 20000:
             deathhandler()
@@ -34,11 +34,11 @@ def turnhandler():
         movementhandler()
 
 
-def globalthreathandler():
-    gv.global_threat += gv.previous_travel_distance + (
-        gv.local_threat[gv.current_country] // 2
-    )  # formula for increasing global threat
-    return
+# def globalthreathandler():
+#   gv.global_threat += gv.previous_travel_distance + (
+#      gv.local_threat[gv.current_country] // 2
+#  )  # formula for increasing global threat
+#  return
 
 
 def localthreathandler(timespent, threat):
@@ -592,33 +592,35 @@ def movementhandler():
     )
     airports = cursor.fetchall()
 
-    print("Available airports: ")
-    for port in airports:
-        print(f"{port[0]} ({port[1]}): {port[2]}")  # Display ID, ICAO code, and name
+    # Find the current airport based on gv.current_airport (which is stored as an ICAO code)
+    current_airport = next(
+        (port for port in airports if port[1] == gv.current_country), None
+    )
 
-    # Select a starting airport
-    choice = None
-    while choice not in [str(port[0]) for port in airports]:
-        choice = input("Enter the ID of the airport you are currently at: ")
+    if not current_airport:
+        print("Error: Your current airport could not be found in the database.")
+        return
 
-    current_airport = next(port for port in airports if str(port[0]) == choice)
     current_lat, current_lon = current_airport[3], current_airport[4]
 
     print(f"\nYou are currently at {current_airport[2]} ({current_airport[1]}).")
 
-    # Find nearby airports
+    # Set travel range (change this value to fit your game mechanics)
+    travel_range_km = 5000  # Example range
+
+    # Find nearby airports within the range
     nearby_airports = [
         port
         for port in airports
         if port[0] != current_airport[0]
-        and haversine(current_lat, current_lon, port[3], port[4]) < 5000
+        and haversine(current_lat, current_lon, port[3], port[4]) < travel_range_km
     ]
 
     if not nearby_airports:
-        print("No airports within 5000 km. You may need a longer-range travel option.")
+        print("No airports within range. You may need a longer-range aircraft.")
         return
 
-    print("\nNearby airports within 5000 km:")
+    print("\nNearby airports within range:")
     for port in nearby_airports:
         distance = haversine(current_lat, current_lon, port[3], port[4])
         print(f"{port[0]} ({port[1]}): {port[2]} - {distance:.2f} km away")
@@ -634,7 +636,7 @@ def movementhandler():
     print(f"\nYou have chosen to go to {chosen_airport[2]} ({chosen_airport[1]}).")
 
     # Update game variables
-    gv.current_country = chosen_airport[2]  # Update based on the airport name
+    gv.current_airport = chosen_airport[1]  # Update with ICAO code
     gv.current_score += 300
     gv.previous_travel_distance = haversine(
         current_lat, current_lon, chosen_airport[3], chosen_airport[4]
