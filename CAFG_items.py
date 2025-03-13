@@ -384,7 +384,7 @@ gun_mag.buy = "Dispensable freedom acquired."
 gun_mag.rarity = rare
 gun_mag.price = costly
 gun_mag.use_time = 1
-gun_mag.active = True
+gun_mag.active = False
 
 
 
